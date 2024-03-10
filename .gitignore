@@ -4,3 +4,4 @@ documentation/
 output/
 abolish-job-applications/
 data/
+__pycache__/

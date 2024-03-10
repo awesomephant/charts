@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.geojson ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp ./output/rarotonga-map.svg ./output/tlatelolco-map.svg
+all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.geojson ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg
 
 ./output:
 	mkdir output
@@ -89,6 +89,30 @@ color_zone=\#aecde5
 	-points target=countries + name="country_labels" \
 	-filter where="['Brazil', 'Mexico'].includes(ADMIN)" target="country_labels" \
 	-style label-text=ADMIN stroke="#fafafa" stroke-width=2 fill="black" font-size=16 css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-graticule interval=10 \
+	-style stroke="rgba(0,0,0,.1)" stroke-width=0.5 \
+	-graticule polygon \
+	-style stroke=none fill=#fafafa \
+	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
+	-proj +proj=merc +lon_0=180 target=* \
+	-o $@ format=svg target=polygon,extent,countries,country_labels,graticule,scalebar fit-extent=extent margin=20
+
+./output/bangkok-map.svg:
+	mapshaper \
+	-i ./tmp/ne_50m_admin_0_countries.geojson ./tmp/bangkok-extent.geojson combine-files \
+	-rename-layers countries,extent \
+	-simplify visvalingam percentage=0.5 target=countries \
+	-clean target=countries \
+	-join source=countries ./data/bangkok_members.csv keys=sov_a3,code target=countries \
+	-colorizer name=calcFill colors='${color_ratified}' categories='ratified' nodata="white" \
+	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
+	-style stroke="black" stroke-width="1"  where="treaty_status === 'ratified'" target=countries \
+	-snap target=extent \
+	-dissolve target=extent \
+	-style fill=${color_zone} stroke="black" target=extent \
+	-points target=countries + name="country_labels" \
+	-filter where="['Brazil', 'Mexico'].includes(name)" target="country_labels" \
+	-style label-text=name stroke="#fafafa" stroke-width=2 fill="black" font-size=16 css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
 	-graticule interval=10 \
 	-style stroke="rgba(0,0,0,.1)" stroke-width=0.5 \
 	-graticule polygon \
