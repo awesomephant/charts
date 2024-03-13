@@ -6,7 +6,7 @@
 
 ### Data sources
 
-- Base map: [Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-details/)
+- Base map: [Natural Earth](https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-details/)
 - Exclusive Economic Zones: Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Maritime Boundaries and Exclusive Economic Zones (200NM), version 12. Available online at https://www.marineregions.org/. https://doi.org/10.14284/632
 - 12 Mile Zones: Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Territorial Seas (12NM), version 4. Available online at https://www.marineregions.org/. https://doi.org/10.14284/633
 - Extended Continental Shelves: Flanders Marine Institute (2022). Maritime Boundaries Geodatabase: Extended Continental Shelves, version 1. Available online at https://www.marineregions.org/ https://doi.org/10.14284/577.

@@ -1,11 +1,20 @@
 .PHONY: all
 
-all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.geojson ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-detail.svg ./output/semipalatinsk-overview.svg ./output/world-map.svg
+all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.shp ./tmp/eez_12nm_v4.shp ./tmp/eez_v12.shp ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp maps
 
-maps: ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-map.svg ./output/world-map.svg
+maps: ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-detail.svg ./output/semipalatinsk-overview.svg ./output/world-map.svg
 
 ./output:
 	mkdir output
+
+./tmp/ne_50m_admin_0_countries/:
+	unzip -q -o -d ./tmp/ne_50m_admin_0_countries.zip
+
+./tmp/World_12NM_v4_20231025/:
+	unzip -q -o -d ./tmp/World_12NM_v4_20231025.zip
+
+./tmp/World_EEZ_v12_20231025:
+	unzip -q -o -d ./tmp/World_EEZ_v12_20231025.zip
 
 ./tmp:
 	mkdir tmp
@@ -13,12 +22,9 @@ maps: ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-ma
 treaty-members:
 	python parse_treaties.py
 
-./tmp/ne_50m_admin_0_countries.geojson:
-	curl -L -k -o $@ "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson"
-
-./tmp/usa_12nm_exterior.geojson:
+./tmp/usa_12nm_exterior.shp:
 	mapshaper \
-	-i "./data/eez_12nm_v4.shp" \
+	-i "./tmp/World_12NM_v4_20231025/eez_12nm_v4.shp" \
 	-filter 'GEONAME === "United States 12 NM"' \
 	-drop holes \
 	-clean \
@@ -26,9 +32,9 @@ treaty-members:
 
 ./tmp/australia_12nm_exterior.shp:
 	mapshaper \
-	-i "./data/eez_12nm_v4.shp" \
-	-filter "GEONAME === 'Australian 12 NM'"\
-	-drop holes\
+	-i "./tmp/World_12NM_v4_20231025/eez_12nm_v4.shp" \
+	-filter "GEONAME === 'Australian 12 NM'" \
+	-drop holes \
 	-erase bbox="142.0011,-9.5488,142.9038,-9.1336" \
 	-filter-islands remove-empty min-area=100000km2 \
 	-clean \
@@ -36,17 +42,17 @@ treaty-members:
 
 ./tmp/indonesia_land.shp:
 	mapshaper \
-	-i "./data/ne_50m_admin_0_countries.shp" \
-	-filter "SOV_A3 === 'IDN'"\
-	-drop holes\
+	-i "./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp" \
+	-filter "SOV_A3 === 'IDN'" \
+	-drop holes \
 	-clean \
 	-o $@
 
 ./tmp/papua_land.shp:
 	mapshaper \
-	-i "./data/ne_50m_admin_0_countries.shp" \
-	-filter "SOV_A3 === 'PNG'"\
-	-drop holes\
+	-i "./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp" \
+	-filter "SOV_A3 === 'PNG'" \
+	-drop holes \
 	-clean \
 	-o $@
 
@@ -60,7 +66,7 @@ label_font=Atlas Grotesk
 
 ./output/rarotonga-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/rarotonga-extent.geojson combine-files \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/rarotonga-extent.geojson combine-files \
 	-rename-layers countries,extent \
 	-simplify visvalingam percentage=0.3 target=countries \
 	-clean target=countries \
@@ -82,15 +88,18 @@ label_font=Atlas Grotesk
 
 ./output/semipalatinsk-detail.svg ./output/semipalatinsk-overview.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/semipalatinsk-extent.geojson combine-files \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/semipalatinsk-extent.geojson combine-files \
 	-rename-layers countries,extent \
 	-simplify visvalingam percentage=1 target=countries \
 	-clean target=countries \
 	-join source=countries ./data/semipalatinsk_members.csv keys=ISO_A3_EH,code target=countries \
 	-colorizer name=calcFill colors='${color_ratified}' categories='ratification' nodata="white" \
 	-filter target="countries" where="treaty_status==='ratification'" + name="members" \
+	-innerlines target="members" + name="inner_lines" \
+	-style target="inner_lines" stroke="black" stroke-width=1 \
+	-style target="extent" stroke="black" stroke-width=1.5 \
 	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
-	-style stroke="black" stroke-width="1"  where="treaty_status === 'ratification'" target=countries \
+	-style stroke="none"  where="treaty_status === 'ratification'" target=countries \
 	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
 	-filter where="treaty_status === 'ratification' || ['China','Russia','Mongolia', 'India','Iran','Afghanistan','Pakistan','Turkey','Armenia', 'Saudi Arabia', 'Egypt'].includes(ADMIN)" target="country_labels" \
 	-style label-text=ADMIN stroke=${color_water} stroke-width=${label_stroke} fill="black" font-size=${label_size} css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
@@ -98,13 +107,13 @@ label_font=Atlas Grotesk
 	-style stroke=none fill=${color_water} \
 	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
 	-proj +proj=natearth target=* \
-	-o ./output/semipalatinsk-detail.svg format=svg target=polygon,countries,country_labels,scalebar fit-extent=extent margin=200 \
+	-o ./output/semipalatinsk-detail.svg format=svg target=polygon,countries,inner_lines,extent,country_labels,scalebar fit-extent=extent margin=200 \
 	-o ./output/semipalatinsk-overview.svg format=svg target=polygon,countries,graticule margin=10
 
 
 ./output/tlatelolco-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/tlatelolco-extent.geojson combine-files \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/tlatelolco-extent.geojson combine-files \
 	-rename-layers countries,extent \
 	-simplify visvalingam percentage=0.2 target=countries \
 	-clean target=countries \
@@ -127,7 +136,7 @@ label_font=Atlas Grotesk
 
 ./output/bangkok-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/bangkok-extent.geojson combine-files \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/bangkok-extent.geojson combine-files \
 	-rename-layers countries,extent \
 	-simplify visvalingam percentage=0.5 target=countries \
 	-clean target=countries \
@@ -147,7 +156,7 @@ label_font=Atlas Grotesk
 
 ./output/pelindaba-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/pelindaba-extent.geojson combine-files \
+	-i ./ne_50m_admin_0_countries/tmp/ne_50m_admin_0_countries.shp ./tmp/pelindaba-extent.geojson combine-files \
 	-rename-layers countries,extent \
 	-simplify visvalingam percentage=0.5 target=countries \
 	-clean target=countries \
@@ -167,7 +176,7 @@ label_font=Atlas Grotesk
 
 ./output/world-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.geojson ./tmp/bangkok-extent.geojson ./tmp/rarotonga-extent.geojson ./tmp/tlatelolco-extent.geojson ./tmp/pelindaba-extent.geojson ./tmp/antarctica-extent.geojson combine-files \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/bangkok-extent.geojson ./tmp/rarotonga-extent.geojson ./tmp/tlatelolco-extent.geojson ./tmp/pelindaba-extent.geojson ./tmp/antarctica-extent.geojson combine-files \
 	-rename-layers countries,bangkok_extent,rarotonga_extent,tlatelolco_extent,pelindaba_extent,antarctica_extent \
 	-simplify visvalingam percentage=.15 keep-shapes \
 	-filter-islands min-area=100km2 target=countries\
@@ -175,19 +184,19 @@ label_font=Atlas Grotesk
 	-clean target=countries \
 	-snap target=rarotonga_extent \
 	-dissolve2 target=rarotonga_extent \
-	-join source=countries ./data/bangkok_members.csv keys=adm0_a3,code prefix="bangkok_" target=countries \
-	-join source=countries ./data/rarotonga_members.csv keys=adm0_a3,code prefix="rarotonga_" target=countries \
-	-join source=countries ./data/tlatelolco_members.csv keys=adm0_a3,code prefix="tlatelolco_" target=countries \
-	-join source=countries ./data/pelindaba_members.csv keys=adm0_a3,code prefix="pelindaba_" target=countries \
-	-join source=countries ./data/semipalatinsk_members.csv keys=adm0_a3,code prefix="semipalatinsk_" target=countries \
+	-join source=countries ./data/bangkok_members.csv keys=ADM0_A3,code prefix="bangkok_" target=countries \
+	-join source=countries ./data/rarotonga_members.csv keys=ADM0_A3,code prefix="rarotonga_" target=countries \
+	-join source=countries ./data/tlatelolco_members.csv keys=ADM0_A3,code prefix="tlatelolco_" target=countries \
+	-join source=countries ./data/pelindaba_members.csv keys=ADM0_A3,code prefix="pelindaba_" target=countries \
+	-join source=countries ./data/semipalatinsk_members.csv keys=ADM0_A3,code prefix="semipalatinsk_" target=countries \
 	-style fill="white" stroke="rgba(0,0,0,.35)" stroke-width=.5 target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="bangkok_treaty_status === 'ratified'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="rarotonga_treaty_status === 'ratified'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="tlatelolco_treaty_status === 'ratified'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="pelindaba_treaty_status === 'ratification' || pelindaba_treaty_status === 'accession'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="semipalatinsk_treaty_status === 'ratification'" target=countries \
-	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="name === 'Antarctica'" target=countries \
-	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="name === 'Mongolia'" target=countries \
+	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="NAME === 'Antarctica'" target=countries \
+	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="NAME === 'Mongolia'" target=countries \
 	-style fill=${color_signed} stroke="black" stroke-width=.5  where="pelindaba_treaty_status === 'signature'" target=countries \
 	-style fill=${color_zone} stroke="black" stroke-width=.5 target=bangkok_extent,rarotonga_extent,tlatelolco_extent,pelindaba_extent,antarctica_extent \
 	-proj +proj=natearth target=* \
