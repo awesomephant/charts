@@ -68,7 +68,7 @@ label_font=Atlas Grotesk
 	mapshaper \
 	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/rarotonga-extent.geojson combine-files \
 	-rename-layers countries,extent \
-	-simplify visvalingam percentage=0.3 target=countries \
+	-simplify visvalingam percentage=0.3 \
 	-clean target=countries \
 	-join source=countries ./data/rarotonga_members.csv keys=ISO_A3_EH,code target=countries \
 	-colorizer name=calcFill colors='${color_ratified}' categories='ratified' nodata="white" \
@@ -86,7 +86,7 @@ label_font=Atlas Grotesk
 	-proj +proj=merc +lon_0=180 target=* \
 	-o $@ format=svg target=polygon,extent,countries,country_labels,graticule,scalebar fit-extent=extent margin=20
 
-./output/semipalatinsk-detail.svg ./output/semipalatinsk-overview.svg:
+./output/semipalatinsk-detail.svg:
 	mapshaper \
 	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/semipalatinsk-extent.geojson combine-files \
 	-rename-layers countries,extent \
@@ -97,18 +97,17 @@ label_font=Atlas Grotesk
 	-filter target="countries" where="treaty_status==='ratification'" + name="members" \
 	-innerlines target="members" + name="inner_lines" \
 	-style target="inner_lines" stroke="black" stroke-width=1 \
-	-style target="extent" stroke="black" stroke-width=1.5 \
+	-style target="extent" stroke="black" stroke-width=1 \
 	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
 	-style stroke="none"  where="treaty_status === 'ratification'" target=countries \
 	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
 	-filter where="treaty_status === 'ratification' || ['China','Russia','Mongolia', 'India','Iran','Afghanistan','Pakistan','Turkey','Armenia', 'Saudi Arabia', 'Egypt'].includes(ADMIN)" target="country_labels" \
-	-style label-text=ADMIN stroke=${color_water} stroke-width=${label_stroke} fill="black" font-size=${label_size} css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-style label-text=ADMIN stroke=white stroke-width=${label_stroke} fill="black" font-size=${label_size} css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
 	-graticule polygon \
 	-style stroke=none fill=${color_water} \
 	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
 	-proj +proj=natearth target=* \
-	-o ./output/semipalatinsk-detail.svg format=svg target=polygon,countries,inner_lines,extent,country_labels,scalebar fit-extent=extent margin=200 \
-	-o ./output/semipalatinsk-overview.svg format=svg target=polygon,countries,graticule margin=10
+	-o ./output/semipalatinsk-detail.svg format=svg target=polygon,countries,inner_lines,extent,country_labels,scalebar fit-extent=extent margin=170 \
 
 
 ./output/tlatelolco-map.svg:
@@ -138,13 +137,15 @@ label_font=Atlas Grotesk
 	mapshaper \
 	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/bangkok-extent.geojson combine-files \
 	-rename-layers countries,extent \
-	-simplify visvalingam percentage=0.5 target=countries \
+	-simplify visvalingam percentage=0.5 \
 	-clean target=countries \
+	-filter "true" target='extent' + name="extent_outline" \
 	-join source=countries ./data/bangkok_members.csv keys=SOV_A3,code target=countries \
 	-colorizer name=calcFill colors='${color_ratified}' categories='ratified' nodata="white" \
 	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
 	-style stroke="black" stroke-width="1"  where="treaty_status === 'ratified'" target=countries \
-	-style fill=${color_zone} stroke="black" target=extent \
+	-style fill=${color_zone} target=extent \
+	-style stroke=black stroke-width=1 target=extent_outline \
 	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
 	-filter where="treaty_status === 'ratified'" target="country_labels" \
 	-style label-text=NAME stroke=white stroke-width=4 font-family="${labl_font}" fill="black" font-size=${label_size} css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
@@ -152,7 +153,7 @@ label_font=Atlas Grotesk
 	-style stroke=none fill=#fafafa \
 	-scalebar position="top-right" margin=60 label-position="top" style="b" label="1000 km" tic-length=6 \
 	-proj +proj=merc target=* \
-	-o $@ format=svg target=polygon,extent,countries,country_labels,scalebar fit-extent=extent margin=80
+	-o $@ format=svg target=polygon,extent,countries,extent_outline,country_labels,scalebar fit-extent=extent margin=80
 
 ./output/pelindaba-map.svg:
 	mapshaper \
