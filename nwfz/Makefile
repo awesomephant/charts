@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.geojson ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-map.svg ./output/world-map.svg
+all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.geojson ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-detail.svg ./output/semipalatinsk-overview.svg ./output/world-map.svg
 
 maps: ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-map.svg ./output/world-map.svg
 
@@ -80,7 +80,7 @@ label_font=Atlas Grotesk
 	-proj +proj=merc +lon_0=180 target=* \
 	-o $@ format=svg target=polygon,extent,countries,country_labels,graticule,scalebar fit-extent=extent margin=20
 
-./output/semipalatinsk-map.svg:
+./output/semipalatinsk-detail.svg ./output/semipalatinsk-overview.svg:
 	mapshaper \
 	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/semipalatinsk-extent.geojson combine-files \
 	-rename-layers countries,extent \
@@ -98,7 +98,9 @@ label_font=Atlas Grotesk
 	-style stroke=none fill=${color_water} \
 	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
 	-proj +proj=natearth target=* \
-	-o $@ format=svg target=polygon,countries,country_labels,scalebar fit-extent=extent margin=200
+	-o ./output/semipalatinsk-detail.svg format=svg target=polygon,countries,country_labels,scalebar fit-extent=extent margin=200 \
+	-o ./output/semipalatinsk-overview.svg format=svg target=polygon,countries,graticule margin=10
+
 
 ./output/tlatelolco-map.svg:
 	mapshaper \
@@ -121,6 +123,7 @@ label_font=Atlas Grotesk
 	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
 	-proj +proj=merc target=* \
 	-o $@ format=svg target=polygon,extent,countries,country_labels,graticule,scalebar fit-extent=extent margin=20
+	-proj +proj=natearth target=* \
 
 ./output/bangkok-map.svg:
 	mapshaper \
