@@ -1,8 +1,8 @@
 .PHONY: all
 
-all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.geojson ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/world-map.svg
+all: ./output ./tmp ./tmp/ne_50m_admin_0_countries.geojson ./tmp/australia_12nm_exterior.shp ./tmp/usa_12nm_exterior.geojson ./tmp/indonesia_land.shp ./tmp/papua_land.shp ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-map.svg ./output/world-map.svg
 
-maps: ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/world-map.svg
+maps: ./output/rarotonga-map.svg ./output/tlatelolco-map.svg ./output/bangkok-map.svg ./output/semipalatinsk-map.svg ./output/world-map.svg
 
 ./output:
 	mkdir output
@@ -53,32 +53,52 @@ treaty-members:
 color_ratified=\#055fb5
 color_signed=\#4c83b7
 color_zone=\#aecde5
-color_water=\#fafafa
+color_water=\#f9f9f9
+label_size=15
+label_stroke=3
+label_font=Atlas Grotesk
 
 ./output/rarotonga-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/rarotonga-extent.shp combine-files\
+	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/rarotonga-extent.geojson combine-files \
 	-rename-layers countries,extent \
-	-simplify visvalingam percentage=0.4 target=countries\
-	-clean target=countries\
-	-join source=countries ./data/rarotonga_members.csv keys=ISO_A3_EH,code target=countries\
+	-simplify visvalingam percentage=0.3 target=countries \
+	-clean target=countries \
+	-join source=countries ./data/rarotonga_members.csv keys=ISO_A3_EH,code target=countries \
 	-colorizer name=calcFill colors='${color_ratified}' categories='ratified' nodata="white" \
-	-style fill="calcFill(treaty_status)" stroke="black" stroke-width=".5" target=countries\
-	-style  stroke-width="1"  where="treaty_status === 'ratified'" target=countries\
+	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
+	-style stroke="black" stroke-width="1"  where="treaty_status === 'ratified'" target=countries \
 	-snap target=extent \
 	-dissolve target=extent \
 	-style fill=${color_zone} stroke="black" target=extent \
-	-points target=countries + name="country_labels" \
-	-filter where="['Australia', 'Papua New Guinea', 'East Timor','New Zealand', 'Guam', 'Solomon Islands', 'Pitcairn Islands','Cook Islands','Malaysia', 'Niue'].includes(ADMIN)" target="country_labels" \
-	-style label-text=ADMIN stroke="#fafafa" stroke-width=2 fill="black" font-size=12 css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;"\
-	-graticule interval=30 \
-	-style stroke="black" stroke-width=0.5 stroke-dasharray="1 2"\
+	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-filter where="treaty_status === 'ratified'" target="country_labels" \
+	-style label-text=ADMIN stroke="${color_water}" stroke-width=${label_stroke} font-size=${label_size} font-family="${label_font}" fill="black" css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
 	-graticule polygon \
 	-style stroke=none fill=${color_water} \
-	-clip bbox="100,-50,180,20" target=countries\
-	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6\
+	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
 	-proj +proj=merc +lon_0=180 target=* \
 	-o $@ format=svg target=polygon,extent,countries,country_labels,graticule,scalebar fit-extent=extent margin=20
+
+./output/semipalatinsk-map.svg:
+	mapshaper \
+	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/semipalatinsk-extent.geojson combine-files \
+	-rename-layers countries,extent \
+	-simplify visvalingam percentage=1 target=countries \
+	-clean target=countries \
+	-join source=countries ./data/semipalatinsk_members.csv keys=ISO_A3_EH,code target=countries \
+	-colorizer name=calcFill colors='${color_ratified}' categories='ratification' nodata="white" \
+	-filter target="countries" where="treaty_status==='ratification'" + name="members" \
+	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
+	-style stroke="black" stroke-width="1"  where="treaty_status === 'ratification'" target=countries \
+	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-filter where="treaty_status === 'ratification' || ['China','Russia','Mongolia', 'India','Iran','Afghanistan','Pakistan','Turkey','Armenia', 'Saudi Arabia', 'Egypt'].includes(ADMIN)" target="country_labels" \
+	-style label-text=ADMIN stroke=${color_water} stroke-width=${label_stroke} fill="black" font-size=${label_size} css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-graticule polygon \
+	-style stroke=none fill=${color_water} \
+	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
+	-proj +proj=natearth target=* \
+	-o $@ format=svg target=polygon,countries,country_labels,scalebar fit-extent=extent margin=200
 
 ./output/tlatelolco-map.svg:
 	mapshaper \
@@ -93,15 +113,13 @@ color_water=\#fafafa
 	-snap target=extent \
 	-dissolve target=extent \
 	-style fill=${color_zone} stroke="black" target=extent \
-	-points target=countries + name="country_labels" \
-	-filter where="['Brazil', 'Mexico'].includes(ADMIN)" target="country_labels" \
-	-style label-text=ADMIN stroke="#fafafa" stroke-width=2 fill="black" font-size=16 css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
-	-graticule interval=10 \
-	-style stroke="rgba(0,0,0,.1)" stroke-width=0.5 \
+	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-filter where="['Brazil', 'Argentina', 'Mexico'].includes(ADMIN)" target="country_labels" \
+	-style label-text=ADMIN stroke="#fafafa" stroke-width=${label_stroke} fill="black" font-family="${label_font}" font-size=${label_size} css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
 	-graticule polygon \
 	-style stroke=none fill=#fafafa \
 	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
-	-proj +proj=merc +lon_0=180 target=* \
+	-proj +proj=merc target=* \
 	-o $@ format=svg target=polygon,extent,countries,country_labels,graticule,scalebar fit-extent=extent margin=20
 
 ./output/bangkok-map.svg:
@@ -116,8 +134,8 @@ color_water=\#fafafa
 	-style stroke="black" stroke-width="1"  where="treaty_status === 'ratified'" target=countries \
 	-style fill=${color_zone} stroke="black" target=extent \
 	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
-	-filter where="['Brunei','Cambodia','Indonesia','Lao PDR','Malaysia','Myanmar','Philippines','Singapore','Thailand','Vietnam'].includes(ADMIN)" target="country_labels" \
-	-style label-text=name stroke=white stroke-width=4 font-family="Atlas Grotesk" fill="black" font-size=14 css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-filter where="treaty_status === 'ratified'" target="country_labels" \
+	-style label-text=NAME stroke=white stroke-width=4 font-family="${labl_font}" fill="black" font-size=${label_size} css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
 	-graticule polygon \
 	-style stroke=none fill=#fafafa \
 	-scalebar position="top-right" margin=60 label-position="top" style="b" label="1000 km" tic-length=6 \
@@ -126,27 +144,28 @@ color_water=\#fafafa
 
 ./output/pelindaba-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.geojson combine-files \
-	-rename-layers countries \
+	-i ./tmp/ne_50m_admin_0_countries.shp ./tmp/pelindaba-extent.geojson combine-files \
+	-rename-layers countries,extent \
 	-simplify visvalingam percentage=0.5 target=countries \
 	-clean target=countries \
-	-join source=countries ./data/pelindaba_members.csv keys=sov_a3,code target=countries \
-	-colorizer name=calcFill colors='${color_ratified},${color_signed}' categories='ratification,signature' nodata="white" \
-	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
-	-style stroke="black" stroke-width="1"  where="treaty_status === 'ratification'" target=countries \
-	-points target=countries + name="country_labels" \
-	-filter where="[].includes(name)" target="country_labels" \
-	-style label-text=name stroke="#fafafa" stroke-width=2 fill="black" font-size=15 css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-join source=countries ./data/pelindaba_members.csv keys=SOV_A3,code target=countries \
+	-colorizer name=calcFill colors='${color_ratified},${color_ratified},${color_signed}' categories='ratification,accession,signature' nodata="white" \
+	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".3" target=countries \
+	-style stroke="black" stroke-width=.5  where="treaty_status === 'ratification' || treaty_status === 'accession' || treaty_status === 'signature'" target=countries \
+	-style fill=${color_zone} stroke="black" target=extent \
+	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-filter where="treaty_status === 'ratification'" target="country_labels" \
+	-style label-text=NAME stroke="${color_water}" stroke-width=${label_stroke} font-family="${label_font}" font-size=${label_size} fill="black"  css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
 	-graticule polygon \
 	-style stroke=none fill=#fafafa \
 	-scalebar position="top-right" margin=60 label-position="top" style="b" label="1000km" tic-length=6 \
-	-proj +proj=merc target=* \
-	-o $@ format=svg target=polygon,countries,country_labels,scalebar margin=20
+	-proj +proj=natearth target=* \
+	-o $@ format=svg target=polygon,extent,countries,country_labels,scalebar fit-extent=extent margin=20
 
 ./output/world-map.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries.geojson ./tmp/bangkok-extent.geojson ./tmp/rarotonga-extent.geojson ./tmp/tlatelolco-extent.geojson ./tmp/antarctica-extent.geojson combine-files \
-	-rename-layers countries,bangkok_extent,rarotonga_extent,tlatelolco_extent,antarctica_extent \
+	-i ./tmp/ne_50m_admin_0_countries.geojson ./tmp/bangkok-extent.geojson ./tmp/rarotonga-extent.geojson ./tmp/tlatelolco-extent.geojson ./tmp/pelindaba-extent.geojson ./tmp/antarctica-extent.geojson combine-files \
+	-rename-layers countries,bangkok_extent,rarotonga_extent,tlatelolco_extent,pelindaba_extent,antarctica_extent \
 	-simplify visvalingam percentage=.15 keep-shapes \
 	-filter-islands min-area=100km2 target=countries\
 	-filter-slivers target=countries\
@@ -162,12 +181,12 @@ color_water=\#fafafa
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="bangkok_treaty_status === 'ratified'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="rarotonga_treaty_status === 'ratified'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="tlatelolco_treaty_status === 'ratified'" target=countries \
-	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="pelindaba_treaty_status === 'ratification'" target=countries \
+	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="pelindaba_treaty_status === 'ratification' || pelindaba_treaty_status === 'accession'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="semipalatinsk_treaty_status === 'ratification'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="name === 'Antarctica'" target=countries \
 	-style fill=${color_ratified} stroke="black" stroke-width=.5  where="name === 'Mongolia'" target=countries \
 	-style fill=${color_signed} stroke="black" stroke-width=.5  where="pelindaba_treaty_status === 'signature'" target=countries \
-	-style fill=${color_zone} stroke="black" stroke-width=.5 target=bangkok_extent,rarotonga_extent,tlatelolco_extent,antarctica_extent \
+	-style fill=${color_zone} stroke="black" stroke-width=.5 target=bangkok_extent,rarotonga_extent,tlatelolco_extent,pelindaba_extent,antarctica_extent \
 	-proj +proj=natearth target=* \
 	-graticule polygon \
 	-style stroke=none fill=#fafafa \
