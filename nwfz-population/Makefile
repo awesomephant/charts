@@ -12,3 +12,6 @@ all: ./output ./tmp ./tmp/WPP2022_TotalPopulationBySex.zip ./tmp/WPP2022_TotalPo
 
 ./tmp/WPP2022_TotalPopulationBySex.csv:
 	unzip -q -o -d tmp ./tmp/WPP2022_TotalPopulationBySex.zip
+
+./data/nwfz_states.csv:
+	python concat_treaty_members.csv
