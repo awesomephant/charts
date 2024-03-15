@@ -57,7 +57,7 @@ treaty-members:
 	-o $@
 
 color_ratified=\#055fb5
-color_signed=\#4c83b7
+color_signed=\#5c93c7
 color_zone=\#aecde5
 color_water=\#f9f9f9
 label_size=15
@@ -162,9 +162,31 @@ label_font='Atlas Grotesk, sans-serif'
 	-proj +proj=natearth target=* \
 	-o ./output/bangkok-overview.svg format=svg target=polygon,extent,countries,extent_outline margin=20
 
+./output/middle-east-detail.svg:
+	mapshaper \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/middle-east-extent.geojson combine-files \
+	-rename-layers countries,extent \
+	-simplify visvalingam percentage=0.5 \
+	-clean target=countries \
+	-filter "true" target='extent' + name="extent_outline" \
+	-join source=countries ./data/middle_east_members.csv keys=SOV_A3,code target=countries \
+	-colorizer name=calcFill colors='${color_signed}' categories='proposed' nodata="white" \
+	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
+	-style stroke="black" stroke-width=".5"  where="treaty_status === 'proposed'" target=countries \
+	-style fill=${color_zone} target=extent \
+	-style stroke=black stroke-width=1.5 target=extent_outline \
+	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-filter where="treaty_status === 'proposed'" target="country_labels" \
+	-style label-text=ADMIN stroke=white stroke-width=3 font-family="${label_font}" fill="black" font-size=12 css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-graticule polygon \
+	-style stroke=none fill=#fafafa \
+	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000 km" tic-length=6 \
+	-proj +proj=merc target=* \
+	-o $@ format=svg target=polygon,extent,countries,extent_outline,country_labels,scalebar fit-extent=extent margin=80 \
+
 ./output/pelindaba-detail.svg:
 	mapshaper \
-	-i ./ne_50m_admin_0_countries/tmp/ne_50m_admin_0_countries.shp ./tmp/pelindaba-extent.geojson combine-files \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/pelindaba-extent.geojson combine-files \
 	-rename-layers countries,extent \
 	-simplify visvalingam percentage=0.5 target=countries \
 	-clean target=countries \
@@ -200,7 +222,7 @@ label_font='Atlas Grotesk, sans-serif'
 	-filter where="bangkok_treaty_status === 'ratified'" target='countries' + name="bangkok_countries" \
 	-filter where="rarotonga_treaty_status === 'ratified'" target='countries' + name="rarotonga_countries" \
 	-filter where="tlatelolco_treaty_status === 'ratified'" target='countries' + name="tlatelolco_countries" \
-	-filter where="pelindaba_treaty_status === 'ratification' || pelindaba_treaty_status === 'accession'" target='countries' + name="pelindaba_countries" \
+	-filter where="pelindaba_treaty_status === 'ratification' || pelindaba_treaty_status === 'accession' || pelindaba_treaty_status === 'signature'" target='countries' + name="pelindaba_countries" \
 	-filter where="semipalatinsk_treaty_status === 'ratification'" target='countries' + name="semipalatinsk_countries" \
 	-filter where="NAME === 'Antarctica' || NAME === 'Mongolia'" target='countries' + name="extra_countries" \
 	-style fill="white" stroke="rgba(0,0,0,.35)" stroke-width=.5 target=countries \
@@ -212,5 +234,6 @@ label_font='Atlas Grotesk, sans-serif'
 	-o ./output/world-bangkok.svg format=svg target=polygon,bangkok_extent,countries,bangkok_countries margin=20 \
 	-o ./output/world-rarotonga.svg format=svg target=polygon,rarotonga_extent,countries,rarotonga_countries margin=20 \
 	-o ./output/world-tlatelolco.svg format=svg target=polygon,tlatelolco_extent,countries,tlatelolco_countries margin=20 \
+	-o ./output/world-pelindaba.svg format=svg target=polygon,countries,pelindaba_countries margin=20 \
 	-o ./output/world-semipalatinsk.svg format=svg target=polygon,countries,semipalatinsk_countries margin=20 \
-	-o $@ format=svg target=polygon,bangkok_extent,rarotonga_extent,tlatelolco_extent,antarctica_extent,countries,bangkok_countries,rarotonga_countries,tlatelolco_countries,semipalatinsk_countries,extra_countries margin=20
+	-o $@ format=svg target=polygon,bangkok_extent,rarotonga_extent,tlatelolco_extent,antarctica_extent,countries,bangkok_countries,pelindaba_countries,rarotonga_countries,tlatelolco_countries,semipalatinsk_countries,extra_countries margin=20
