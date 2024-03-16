@@ -169,7 +169,7 @@ label_font='Atlas Grotesk, sans-serif'
 	-simplify visvalingam percentage=0.5 \
 	-clean target=countries \
 	-filter "true" target='extent' + name="extent_outline" \
-	-join source=countries ./data/middle_east_members.csv keys=SOV_A3,code target=countries \
+	-join source=countries ./data/middle_east_members.csv keys=ADM0_A3,code target=countries \
 	-colorizer name=calcFill colors='${color_signed}' categories='proposed' nodata="white" \
 	-style fill="calcFill(treaty_status)" stroke="gray" stroke-width=".5" target=countries \
 	-style stroke="black" stroke-width=".5"  where="treaty_status === 'proposed'" target=countries \
@@ -182,7 +182,7 @@ label_font='Atlas Grotesk, sans-serif'
 	-style stroke=none fill=#fafafa \
 	-scalebar position="bottom-right" margin=60 label-position="top" style="b" label="1000 km" tic-length=6 \
 	-proj +proj=merc target=* \
-	-o $@ format=svg target=polygon,extent,countries,extent_outline,country_labels,scalebar fit-extent=extent margin=80 \
+	-o $@ format=svg target=polygon,extent,countries,extent_outline,scalebar fit-extent=extent margin=80 \
 
 ./output/pelindaba-detail.svg:
 	mapshaper \
