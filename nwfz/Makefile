@@ -187,13 +187,13 @@ label_font='sans-serif'
 ./tmp/gray-world-proj.tif:
 	gdalwarp \
     -co "TFW=YES" \
-    -s_srs ./tmp/GRAY_50M_SR_OB/GRAY_50M_SR_OB.prj \
+    -s_srs ./tmp/GRAY_LR_SR_W/GRAY_LR_SR_W.prj \
     -t_srs "ESRI:53077" \
 	-overwrite \
-    ./tmp/GRAY_50M_SR_OB/GRAY_50M_SR_OB.tif \
+    ./tmp/GRAY_LR_SR_W/GRAY_LR_SR_W.tif \
     $@
 
-./output/middle-east-raster.tif:
+./tmp/middle-east-raster.tif:
 	gdalwarp \
 	-cutline ./tmp/middle-east-map-extent.geojson \
     -crop_to_cutline \
