@@ -1,10 +1,10 @@
 import overpy
 import geopandas as gp
-from shapely.geometry import shape, Polygon,LineString, MultiPolygon
+from shapely.geometry import LineString, MultiPolygon
 from shapely.ops import polygonize
 
 def rel_to_multipolygon(data, rel):
-	# Trandsforms single relation to  MultiPolygon
+	# Transforms single RelationWay to MultiPolygon
 	lines = []
 
 	for rel_way in list(filter(lambda x: isinstance(x, overpy.RelationWay),rel.members)):
