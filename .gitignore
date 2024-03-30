@@ -5,3 +5,4 @@ output/
 abolish-job-applications/
 __pycache__/
 .DS_Store
+*.ai

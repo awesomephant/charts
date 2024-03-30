@@ -9,3 +9,4 @@
 - https://osm-boundaries.com/Map
 - Newspapers use some combination of big streets, land use (not buildings) and water.
 - https://gijn.org/stories/using-satellite-radar-data-track-gaza-war-damage/
+- https://transitmap.net/tutorial-type-stroke/
