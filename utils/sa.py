@@ -48,10 +48,10 @@ def get_label_coords(point, label_text: str, label_pos: int, font_size: float):
 	label_vertical = label_positions[label_pos].x
 	label_horizontal = label_positions[label_pos].y
 	
-	atlas = ImageFont.truetype("../fonts/Merriweather/Merriweather-Regular.ttf", size=font_size)
+	font = ImageFont.truetype("../fonts/Merriweather/Merriweather-Regular.ttf", size=font_size)
 
-	bbox = atlas.getbbox(label_text)
-	width = atlas.getlength(label_text)
+	bbox = font.getbbox(label_text)
+	width = font.getlength(label_text)
 	height = (bbox[3]) * .9
 
 	if (label_horizontal == "left"):
@@ -75,11 +75,18 @@ def get_label_coords(point, label_text: str, label_pos: int, font_size: float):
 
 	return (x1,y1,x2,y2) 
 
-time_limit = 3500;
-
 def get_temperature(t):
 	# Given t, return the current temperatue in the annealing schedule (exponential decay)
 	return (.99 ** t) * 1e7
+
+def label_align_to_text_align(label_align: str):
+	if (label_align == "left"):
+		return "right"
+	if (label_align == "right"):
+		return "left"
+	if (label_align == "center"):
+		return "center"
+	return False
 
 def get_neighbour(s):
 	# Returns a neighbouring state by moving a single label
@@ -122,22 +129,30 @@ def get_acceptance_prob(e, e_new, temperature) -> float:
 	else:
 		return math.e ** (-1 * (e_new - e) / temperature)
 
-def place_labels(gdf: gp.GeoDataFrame) -> gp.GeoDataFrame:
+def place_labels(
+		gdf: gp.GeoDataFrame,
+		name_field: str = "name",
+		population_field : str = "population",
+		feature_class_field : str = "featurecla",
+		time_limit: int = 3000) -> gp.GeoDataFrame:
+
 	# Generate random initial state
 	state = []
 	for i, obj in gdf.iterrows():
-		label_text = obj["name"]
-		font_size = pop_to_font_size(obj["population"])
+		label_text = obj[name_field]
+		font_size = pop_to_font_size(obj[population_field])
 		label_pos = random.randrange(len(label_positions))
 		feature_coords = (obj.geometry.x, obj.geometry.y)
 
 		state.append({
 		"feature_coords": feature_coords,
+		"feature_class": obj[feature_class_field],
 		"label_text": label_text,
 		"font_size": font_size,
 		"label_pos": label_pos,
 		"label_pos_v": label_positions[label_pos][0],
 		"label_pos_h": label_positions[label_pos][1],
+		"text_align": "left",
 		"label_coords": get_label_coords(
 			feature_coords,
 			label_text,
@@ -154,19 +169,25 @@ def place_labels(gdf: gp.GeoDataFrame) -> gp.GeoDataFrame:
 		e_new = get_energy(state_new)
 		if (get_acceptance_prob(e, e_new, temperature) > random.uniform(0,1)):
 			state = state_new
+		if (t % 500 == 0):
+			print(f"step: {t}/{time_limit} t: {temperature} e: {e}")
 		t += 1;
 	
 	# Cull overlapping labels
  	# Build output GDF
+	output_gdf = gp.GeoDataFrame(
+		data={
+			"font_size": [l["font_size"] for l in state],
+			"label_text": [l["label_text"] for l in state],
+			"label_position_horizontal": [l["label_pos_h"] for l in state],
+			"label_position_vertical": [l["label_pos_v"] for l in state],
+			"text_align_horizontal": [l["text_align"] for l in state],
+			"feature_class": [l["feature_class"] for l in state],
+			# "geometry": [Polygon(rect_to_points(l["label_coords"])) for l in state]
+			"geometry": [Point(l["feature_coords"]) for l in state]
+		},
+		geometry="geometry",
+		crs='EPSG:4326'
+	)
 
-	return state
-
-label_boxes = gp.GeoDataFrame(
-	data={
-		"font_size": [l["font_size"] for l in labels],
-		"label_text": [l["label_text"] for l in labels],
-		"label_ha": [l["label_pos_h"] for l in labels],
-		"geometry": [Polygon(rect_to_points(l["label_coords"])) for l in labels]},
-	geometry="geometry",
-	crs='EPSG:4326'
-)
+	return output_gdf

@@ -2,7 +2,7 @@
 
 all: ./tmp vectors
 
-vectors: ./output ./output/north-korea.svg
+vectors: ./output ./output/north-korea.svg ./output/eu-nukes.svg
 
 ./output:
 	mkdir -p output
@@ -15,11 +15,14 @@ label_size_town=14
 label_stroke=3
 label_font='sans-serif'
 color_land=\#fafafa
+color_urban=\#F7ECBA
 color_land_outline=\#999999
 color_river=\#82A7C9
 color_lake=\#CDD9E4
 color_line=\#e64100
 color_blue_90=\#080A0C
+color_blue_70=\#274868
+color_blue_50=\#4D8ECB
 color_blue_10=\#F2F5F7
 
 
@@ -46,7 +49,7 @@ color_blue_10=\#F2F5F7
 	-style fill='${color_land}' stroke-width=1 stroke='${color_land_outline}' target="countries" \
 	-style where="ADM0_A3 === 'PRK'" fill='white' opacity=1 target="countries" \
 	-style fill='none' stroke='${color_blue_90}' stroke-width=1.5 target="prk" \
-	-style fill=\#F7ECBA target='urban' \
+	-style fill=${color_urban} target='urban' \
 	-style stroke=${color_river} stroke-width=1 target=rivers \
 	-style stroke=${color_river} stroke-width=1 fill="${color_river}" target=lakes \
 	-style stroke=${color_blue_90} opacity=.15 css='mix-blend-mode: multiply' target=provinces \
@@ -58,3 +61,26 @@ color_blue_10=\#F2F5F7
 	-scalebar position="bottom-left" margin=30 label-position="top" style="a" label="200km" bar-width=2 \
 	-proj +proj=merc target=* \
 	-o $@ format=svg target=me,countries,urban,rivers,lakes,provinces,prk,places_towns,places_capitals,towns_labels,capitals_labels,scalebar fit-extent=me
+
+./output/eu-nukes.svg:
+	mapshaper \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/ne_10m_rivers_lake_centerlines_scale_rank/ne_10m_rivers_lake_centerlines_scale_rank.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./tmp/eu-nukes-extent.geojson combine-files \
+	-rename-layers countries,rivers,lakes,urban,me \
+	-clip source=me target=countries \
+	-clip source=me target=rivers \
+	-clip source=me target=lakes \
+	-clip source=me target=urban \
+	-filter-islands min-area=100km2 target=countries \
+	-filter target=countries where="['BEL', 'DEU', 'NLD', 'ITA', 'TUR'].includes(ADM0_A3)" + name=hosts \
+	-simplify visvalingam percentage=.1 \
+	-clean \
+	-style fill='${color_land}' stroke-width=1 stroke='${color_land_outline}' target="countries" \
+	-style where="['BEL', 'DEU', 'NLD', 'ITA', 'TUR'].includes(ADM0_A3)" fill='${color_blue_50}' opacity=1 target="countries" \
+	-style target='urban' fill=${color_urban} css='mix-blend-mode: multiply' \
+	-style stroke=${color_blue_10} stroke-width=1 target=rivers \
+	-style stroke=${color_blue_10} stroke-width=1 fill="${color_blue_10}" target=lakes \
+	-style fill=none stroke='${color_blue_90}' stroke-width=1.5 target=hosts \
+	-style fill=${color_blue_10} target=me \
+	-scalebar position="bottom-left" margin=30 label-position="top" style="a" label="500km" bar-width=1 \
+	-proj +proj=merc target=* \
+	-o $@ format=svg target=me,countries,hosts fit-extent=me
