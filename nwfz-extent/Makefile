@@ -60,9 +60,30 @@ color_ratified=\#055fb5
 color_signed=\#5c93c7
 color_zone=\#afcee6
 color_water=\#f9f9f9
-label_size=15
+
+label_size=16
+label_size_town=14
 label_stroke=3
 label_font='sans-serif'
+color_land=\#fafafa
+color_urban=\#F7ECBA
+color_land_outline=\#999999
+color_river=\#82A7C9
+color_lake=\#CDD9E4
+color_line=\#e64100
+
+
+color_blue_90=\#080A0C
+color_blue_70=\#274868
+color_blue_60=\#336899
+color_blue_50=\#3486D3
+color_blue_40=\#82A7C9
+color_blue_30=\#ACC0D2
+color_blue_20=\#CDD9E4
+color_blue_10=\#F2F5F7
+color_yellow_40=\#F2D75F
+color_yellow_30=\#EFDC8F
+color_yellow_20=\#F7ECBA
 
 ./output/rarotonga-detail.svg:
 	mapshaper \
@@ -161,6 +182,41 @@ label_font='sans-serif'
 	-o ./output/bangkok-detail.svg format=svg target=polygon,extent,countries,extent_outline,scalebar fit-extent=extent margin=80 \
 	-proj +proj=natearth target=* \
 	-o ./output/bangkok-overview.svg format=svg target=polygon,extent,countries,extent_outline margin=20
+
+./output/bangkok-detail-2.svg:
+	mapshaper \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/ne_50m_urban_areas/ne_50m_urban_areas.shp ./tmp/ne_50m_lakes/ne_50m_lakes.shp ./tmp/ne_50m_rivers_lake_centerlines/ne_50m_rivers_lake_centerlines.shp ./tmp/ne_50m_populated_places_simple/ne_50m_populated_places_simple.shp ./tmp/bangkok-extent.geojson ./tmp/bangkok-map-extent.geojson combine-files \
+	-rename-layers countries,urban,lakes,rivers,places,extent,me \
+	-clip source=me target=countries \
+	-clip source=me target=rivers \
+	-clip source=me target=lakes \
+	-clip source=me target=urban \
+	-clip source=me target=places \
+	-simplify visvalingam percentage=0.75 \
+	-clean \
+	-filter target=places where="featurecla === 'Admin-0 capital'" + name=places_capitals \
+	-filter target=places where="featurecla !== 'Admin-0 capital'" + name=places_towns \
+	-filter target=places_capitals where="true" + name=capitals_labels \
+	-filter target=places_towns where="true" + name=towns_labels \
+	-filter "true" target='extent' + name="extent_outline" \
+	-join source=countries ./data/bangkok_members.csv keys=SOV_A3,code target=countries \
+	-filter where="treaty_status === 'ratified'" target="countries" + name="members" \
+	-style fill="${color_land}" stroke="${color_land_outline}" stroke-width=".5" target=countries \
+	-style stroke="black" stroke-width="1.2" fill="${color_blue_50}" css="mix-blend-mode:multiply" target=members \
+	-style fill=${color_blue_20} target=extent \
+	-style stroke=black stroke-width=1.2 target=extent_outline \
+	-points target=members x=LABEL_X y=LABEL_Y + name="members_labels" \
+	-style target=members_labels label-text=NAME font-family="${label_font}" fill="rgba(0,0,0,.95)" stroke=none font-size=${label_size} css="text-transform:uppercase;letter-spacing:1px" \
+	-style target=me stroke=none fill=${color_blue_10} \
+	-style target=lakes fill="${color_blue_20}" stroke="${color_blue_20}" \
+	-style target=rivers stroke="${color_blue_20}" \
+	-style target=urban fill="${color_yellow_20}" \
+	-symbols target=places_capitals type=square fill='${color_blue_90}' radius=4 \
+	-symbols target=places_towns type=circle fill='${color_blue_90}' radius=2 \
+	-style dy=-7 target=capitals_labels label-text=name stroke="${color_land}" stroke-width=${label_stroke} font-size=12 font-family="${label_font}" fill="${color_blue_90}" css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-scalebar position="top-right" margin=60 label-position="top" style="b" label="1000 km" tic-length=6 \
+	-proj +proj=merc target=* \
+	-o $@ format=svg target=me,extent,countries,rivers,lakes,urban,members,extent_outline,members_labels,scalebar fit-extent=me \
 
 ./output/middle-east-detail.svg:
 	mapshaper \
