@@ -24,6 +24,9 @@ color_blue_90=\#080A0C
 color_blue_70=\#274868
 color_blue_50=\#4D8ECB
 color_blue_10=\#F2F5F7
+color_yellow_40=\#F2D75F
+color_yellow_30=\#EFDC8F
+color_yellow_20=\#F7ECBA
 
 
 ./output/north-korea.svg:
@@ -64,23 +67,24 @@ color_blue_10=\#F2F5F7
 
 ./output/eu-nukes.svg:
 	mapshaper \
-	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/ne_10m_rivers_lake_centerlines_scale_rank/ne_10m_rivers_lake_centerlines_scale_rank.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./tmp/eu-nukes-extent.geojson combine-files \
-	-rename-layers countries,rivers,lakes,urban,me \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp ./tmp/ne_10m_rivers_lake_centerlines_scale_rank/ne_10m_rivers_lake_centerlines_scale_rank.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./tmp/eu-nukes-sites.geojson ./tmp/eu-nukes-extent.geojson combine-files \
+	-rename-layers countries,rivers,lakes,urban,sites,me \
 	-clip source=me target=countries \
 	-clip source=me target=rivers \
 	-clip source=me target=lakes \
 	-clip source=me target=urban \
 	-filter-islands min-area=100km2 target=countries \
 	-filter target=countries where="['BEL', 'DEU', 'NLD', 'ITA', 'TUR'].includes(ADM0_A3)" + name=hosts \
-	-simplify visvalingam percentage=.1 \
+	-simplify visvalingam percentage=.3 \
 	-clean \
 	-style fill='${color_land}' stroke-width=1 stroke='${color_land_outline}' target="countries" \
-	-style where="['BEL', 'DEU', 'NLD', 'ITA', 'TUR'].includes(ADM0_A3)" fill='${color_blue_50}' opacity=1 target="countries" \
+	-style where="['BEL', 'DEU', 'NLD', 'ITA', 'TUR'].includes(ADM0_A3)" fill='${color_yellow_30}' opacity=1 target="countries" \
 	-style target='urban' fill=${color_urban} css='mix-blend-mode: multiply' \
 	-style stroke=${color_blue_10} stroke-width=1 target=rivers \
 	-style stroke=${color_blue_10} stroke-width=1 fill="${color_blue_10}" target=lakes \
-	-style fill=none stroke='${color_blue_90}' stroke-width=1.5 target=hosts \
+	-style fill=none stroke='${color_blue_90}' stroke-width=1.2 target=hosts \
 	-style fill=${color_blue_10} target=me \
+	-symbols target=sites type=circle fill='${color_yellow_40}' stroke="black" stroke-width=1 radius=4 \
 	-scalebar position="bottom-left" margin=30 label-position="top" style="a" label="500km" bar-width=1 \
 	-proj +proj=merc target=* \
-	-o $@ format=svg target=me,countries,hosts fit-extent=me
+	-o $@ format=svg target=me,countries,hosts,sites fit-extent=me
