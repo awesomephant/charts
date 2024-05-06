@@ -1,15 +1,12 @@
-nums = [2,7,11,15]
-target = 9
+def solve(nums, target) -> int:
+	s = {}
+	for i, n in enumerate(nums):
+		match = target - n
+		if (match in s):
+			return [i, s[match]]
+		else:
+			s[n] = i
 
-
-# O(n^2)
-def solve(nums, target):
-	nn = range(len(nums))
-	for i in nn:
-		for j in nn:
-			if j != i:
-				if nums[i] + nums[j] == target:
-					return [i,j]
-				
-solution = solve(nums, target)
-print(solution)
+assert solve([2,7,11,15], 9) == [0, 1] or [1, 0]
+assert solve([3,2,4], 6) == [1, 2] or [2, 1]
+assert solve([3,3], 6) == [0, 1] or [1, 0]
