@@ -1,0 +1,26 @@
+{
+"type": "FeatureCollection",
+"name": "kushan-script-sites",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "Jagat Tepe", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 66.51559419117153, 37.082741916108823 ] } },
+{ "type": "Feature", "properties": { "name": "Old Termez", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 67.124252938280208, 37.327336569961581 ] } },
+{ "type": "Feature", "properties": { "name": "Kampir Tepe", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 66.969541039539394, 37.462541565397316 ] } },
+{ "type": "Feature", "properties": { "name": "Zar Tepe", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 67.101046153469085, 37.462541565397316 ] } },
+{ "type": "Feature", "properties": { "name": "Khatynrabat", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 67.63480220412491, 37.308880633853903 ] } },
+{ "type": "Feature", "properties": { "name": "Ai Khanum", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 69.313426305462741, 37.25656420942115 ] } },
+{ "type": "Feature", "properties": { "name": "Kolkhozabad", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 68.582412583912401, 37.646518657369654 ] } },
+{ "type": "Feature", "properties": { "name": "Kalai Kafirnigan", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 68.32713795099005, 38.12881505686871 ] } },
+{ "type": "Feature", "properties": { "name": "Degriz Tepe", "type": "potential" }, "geometry": { "type": "Point", "coordinates": [ 67.727629343369415, 38.201798639048427 ] } },
+{ "type": "Feature", "properties": { "name": "Kosh Tepe", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 67.820456482613892, 38.359678937952424 ] } },
+{ "type": "Feature", "properties": { "name": "Khalchayan", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 67.948093799075068, 38.326309818868765 ] } },
+{ "type": "Feature", "properties": { "name": "Čimkurgan", "type": "potential" }, "geometry": { "type": "Point", "coordinates": [ 68.300063368710425, 38.541421571535466 ] } },
+{ "type": "Feature", "properties": { "name": "Almosi Gorge", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 68.524395621884608, 38.858368522949284 ] } },
+{ "type": "Feature", "properties": { "name": "Sang-i Naviŝta", "type": "potential" }, "geometry": { "type": "Point", "coordinates": [ 68.895704178862559, 38.990766442075099 ] } },
+{ "type": "Feature", "properties": { "name": "Surkh Kotal", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 68.458730562681382, 36.15399587643779 ] } },
+{ "type": "Feature", "properties": { "name": "Hoq Cave", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 54.377820787970258, 12.524476581988754 ] } },
+{ "type": "Feature", "properties": { "name": "Daŝt-i Nāwur", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 67.575081477778596, 33.872138735552419 ] } },
+{ "type": "Feature", "properties": { "name": "Issyk Kurgan", "type": "confirmed" }, "geometry": { "type": "Point", "coordinates": [ 77.621465942556952, 43.297119012901284 ] } },
+{ "type": "Feature", "properties": { "name": "Khisht Tepe", "type": "potential" }, "geometry": { "type": "Point", "coordinates": [ 67.999840807842261, 37.020043338114831 ] } }
+]
+}
