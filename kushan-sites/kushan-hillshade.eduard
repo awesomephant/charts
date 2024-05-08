@@ -1,0 +1,121 @@
+{
+  "appName" : "Eduard",
+  "appVersion" : "1.4.6",
+  "bookmarkName" : "",
+  "fileFormatVersion" : 3,
+  "grayForVoidValues" : 150,
+  "gridFileBookmark" : "Ym9vazQDAAAAAAQQMAAAAMJQCNPpfKp8Ez0Bd1Vj5QF8GFOrkIszVvhsaE9uKPyEMAIAAAQAAAADAwAAAAgAKAUAAAABAQAAVXNlcnMAAAADAAAAAQEAAG1heAAIAAAAAQEAAFByb2plY3RzBgAAAAEBAABjaGFydHMAAAwAAAABAQAAa3VzaGFuLXNpdGVzAwAAAAEBAAB0bXAAFAAAAAEBAABNYXB6ZW4gcmVzYW1wbGVkLnRpZhwAAAABBgAAEAAAACAAAAAsAAAAPAAAAEwAAABgAAAAbAAAAAgAAAAEAwAAyzgAAAAAAAAIAAAABAMAADXtAwAAAAAACAAAAAQDAAAKIgsAAAAAAAgAAAAEAwAA1mSJAAAAAAAIAAAABAMAAGYP6QAAAAAACAAAAAQDAACme6MAAAAAAAgAAAAEAwAA\/RfrAAAAAAAcAAAAAQYAAKwAAAC8AAAAzAAAANwAAADsAAAA\/AAAAAwBAAAIAAAAAAQAAEHF9gkadP9oGAAAAAECAAABAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAIAAAABAMAAAUAAAAAAAAABAAAAAMDAAD1AQAACAAAAAEJAABmaWxlOi8vLwwAAAABAQAATWFjaW50b3NoIEhECAAAAAQDAAAAUKEbcwAAAAgAAAAABAAAQcXWA8GAAAAkAAAAAQEAADBEMUEzM0MwLURFMkQtNDgyMi04QjhDLUZGNDU3MkQ5OUQxOBgAAAABAgAAgQAAAAEAAADvEwAAAQAAAAAAAAAAAAAAAQAAAAEBAAAvAAAAAAAAAAEFAADMAAAA\/v\/\/\/wEAAAAAAAAAEAAAAAQQAACIAAAAAAAAAAUQAAAcAQAAAAAAABAQAABQAQAAAAAAAEAQAABAAQAAAAAAAAIgAAAcAgAAAAAAAAUgAACMAQAAAAAAABAgAACcAQAAAAAAABEgAADQAQAAAAAAABIgAACwAQAAAAAAABMgAADAAQAAAAAAACAgAAD8AQAAAAAAADAgAAAoAgAAAAAAAAHAAABwAQAAAAAAABHAAAAgAAAAAAAAABLAAACAAQAAAAAAABDQAAAEAAAAAAAAAA==",
+  "gridFilePath" : "Users > max > Projects > charts > kushan-sites > tmp > Mapzen resampled.tif",
+  "gridFilter" : null,
+  "id" : "93340E37-6051-485F-AE3E-34DFAA3599AA",
+  "imageRotation" : 0,
+  "layers" : [
+    {
+      "blendMode" : "Normal",
+      "curve" : {
+        "points" : [
+          {
+            "id" : "3E91A9D4-EC9D-4883-A250-2490C6550394",
+            "x" : 0,
+            "y" : 0.0783164828431373
+          },
+          {
+            "id" : "5BDE2E01-F398-4075-A783-8395CEA9CE18",
+            "x" : 0.15841375612745098,
+            "y" : 0.23426011029411775
+          },
+          {
+            "id" : "1EACBE5F-E370-4905-84FD-9CD1F004D077",
+            "x" : 0.4519186580882354,
+            "y" : 0.5255821078431373
+          },
+          {
+            "id" : "9D3259B2-217C-4E8F-83F2-D7A76AF9884B",
+            "x" : 0.6993719362745099,
+            "y" : 0.7803308823529411
+          },
+          {
+            "id" : "C3524340-9D36-45B8-B49E-F3BEF91C41D5",
+            "x" : 0.9244408700980392,
+            "y" : 1
+          }
+        ]
+      },
+      "id" : "1E0B3386-89FE-4606-9A40-E1E798F59A09",
+      "masks" : [
+
+      ],
+      "name" : "Curve",
+      "opacity" : 1,
+      "type" : "Curve",
+      "visible" : true
+    },
+    {
+      "aerialPerspective" : 0.57,
+      "blendMode" : "Normal",
+      "curve" : {
+        "points" : [
+          {
+            "id" : "DD6E61C1-6A96-4358-A2DB-47DCB390690E",
+            "x" : 0,
+            "y" : 0
+          },
+          {
+            "id" : "33555445-0BBD-445D-958D-20F988A43156",
+            "x" : 1,
+            "y" : 1
+          }
+        ]
+      },
+      "grayInFlatArea" : 0.90588236,
+      "id" : "F89F637B-9D31-43D3-A38F-A275704B9129",
+      "masks" : [
+
+      ],
+      "name" : "Aerial Perspective",
+      "opacity" : 1,
+      "type" : "Aerial Perspective",
+      "visible" : true
+    },
+    {
+      "blendMode" : "Normal",
+      "curve" : {
+        "points" : [
+          {
+            "id" : "3E7E3357-0316-4B2F-93B7-8B9F3CEE8179",
+            "x" : 0,
+            "y" : 0
+          },
+          {
+            "id" : "4A81A9F1-5856-4968-BB21-C7C773B577DF",
+            "x" : 1,
+            "y" : 1
+          }
+        ]
+      },
+      "elevationRange" : [
+        0.35,
+        1
+      ],
+      "flatAreasDetailsSize" : 1,
+      "flatAreasExaggeration" : 1.5,
+      "flatAreasMaxSlopeThresholdDeg" : 4,
+      "flatAreasRelativeMinSlopeThreshold" : 0.5,
+      "flatAreasSlopeBlurRadius" : 20,
+      "flatAreasSmoothingLevelRadius" : 5,
+      "grayInFlatArea" : 0.8354492,
+      "id" : "2B9B2B71-6C58-42A5-925D-6361631493E9",
+      "lightRotation" : 0,
+      "macroGeneralization" : 1.9,
+      "masks" : [
+
+      ],
+      "microGeneralization" : 1.9,
+      "name" : "Manual Shading",
+      "opacity" : 1,
+      "shaderId" : "2022-9-29-r3_15000e",
+      "type" : "Manual Shading",
+      "visible" : true
+    }
+  ]
+}

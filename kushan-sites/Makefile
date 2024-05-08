@@ -2,7 +2,7 @@
 
 all: ./tmp/gray-world-proj.tif ./tmp/gray-world-crop.tif rasters vectors
 
-rasters: ./tmp/sr-proj.tif ./tmp/kushan-sr.tif
+rasters: ./tmp/kushan-hillshade-cropped.tif
 vectors: ./output ./output/kushan-sites.svg
 
 ./output:
@@ -11,22 +11,15 @@ vectors: ./output ./output/kushan-sites.svg
 ./tmp:
 	mkdir -p output
 
-./tmp/sr-proj.tif:
+./tmp/kushan-hillshade-cropped.tif:
 	gdalwarp \
-    -co "TFW=YES" \
-    -s_srs ./tmp/GRAY_HR_SR/GRAY_HR_SR.prj \
+	-s_srs ./tmp/kushan-hillshade.prj \
     -t_srs "EPSG:3857" \
-	-overwrite \
-    ./tmp/GRAY_HR_SR/GRAY_HR_SR.tif \
-    $@
-
-./tmp/kushan-sr.tif:
-	gdalwarp \
 	-cutline ./tmp/map_extent.geojson \
     -crop_to_cutline \
     -dstalpha \
 	-overwrite \
-    ./tmp/sr-proj.tif \
+    ./tmp/kushan-hillshade.tiff \
     $@
 
 label_size=12
@@ -54,6 +47,7 @@ color_line=\#e64100
 	-clean \
 	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
 	-clip source=me target=country_labels \
+	-innerlines target=countries \
 	-filter where="type === 'confirmed'" target=sites + name="sites_confirmed" \
 	-filter where="type === 'potential'" target=sites + name="sites_potential" \
 	-filter where="true" target=sites + name="sites_labels" \
