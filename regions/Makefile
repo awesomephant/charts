@@ -20,6 +20,7 @@ color_land_outline=\#999999
 color_river=\#82A7C9
 color_lake=\#CDD9E4
 color_line=\#e64100
+
 color_blue_90=\#080A0C
 color_blue_70=\#274868
 color_blue_50=\#4D8ECB
@@ -45,7 +46,6 @@ color_yellow_20=\#F7ECBA
 	-filter target=places where="feature_class !== 'Admin-0 capital'" + name=places_towns \
 	-filter target=places_capitals where="true" + name=capitals_labels \
 	-filter target=places_towns where="true" + name=towns_labels \
-	-filter target=places where="feature_class !== 'Admin-0 capital'" + name=places_towns \
 	-simplify visvalingam percentage=.065 \
 	-clean \
 	-innerlines target=provinces \
@@ -88,3 +88,21 @@ color_yellow_20=\#F7ECBA
 	-scalebar position="bottom-left" margin=30 label-position="top" style="a" label="500km" bar-width=1 \
 	-proj +proj=merc target=* \
 	-o $@ format=svg target=me,countries,hosts,sites fit-extent=me
+
+./output/arms-embargos.svg:
+	mapshaper \
+	-i ./tmp/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp combine-files \
+	-rename-layers countries \
+	-join source=countries ./data/arms-embargos.csv keys=ADM0_A3,iso3  \
+	-filter-islands min-area=100km2 target=countries \
+	-filter target=countries where="ADM0_A3 !== 'ATA'" \
+	-filter target=countries where="embargo !== null" + name=countries_outline \
+	-simplify visvalingam percentage=.2 \
+	-clean \
+	-points target=countries_outline x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-style label-text=NAME font-family="${label_font}" font-size=${label_size} fill="black" \
+	-colorizer name=calcFill colors=\#f06842,\#336899,\#dc3609 nodata="rgb(230,230,230)" categories="United Nations embargo,EU embargo without UN counterpart,EU embargo with broader scope than UN embargos on the same target" \
+	-style fill="calcFill(embargo)" target=countries \
+	-style stroke="black" stroke-width=".75" target=countries_outline \
+	-proj +proj=natearth target=* \
+	-o $@ format=svg target=countries,countries_outline,country_labels fit-extent=countries margin=10
