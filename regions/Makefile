@@ -131,7 +131,7 @@ color_yellow_20=\#F7ECBA
 	-style where="ADM0_A3 === 'MMR'" fill='white' opacity=1 target="countries" \
 	-style fill='none' stroke='${color_blue_90}' stroke-width=1.5 target="mmr" \
 	-colorizer name=calcFill colors=red,${color_blue_50},gray nodata="transparent" categories="junta,rebel,disputed" \
-	-style fill="calcFill(controlled_by)" target=provinces \
+	-style fill="calcFill(control)" target=provinces \
 	-style fill=${color_urban} target='urban' \
 	-style stroke=${color_river} stroke-width=1 target=rivers \
 	-style stroke=${color_river} stroke-width=1 fill="${color_river}" target=lakes \
