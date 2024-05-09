@@ -109,7 +109,7 @@ color_yellow_20=\#F7ECBA
 
 ./output/myanmar-control.svg:
 	mapshaper \
-	-i ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/geoBoundaries-MMR-ADM3-all/geoBoundaries-MMR-ADM3.geojson ./tmp/ne_10m_rivers_lake_centerlines_scale_rank/ne_10m_rivers_lake_centerlines_scale_rank.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./tmp/myanmar-labels.geojson ./tmp/myanmar-conflict-me.geojson combine-files \
+	-i ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/myanmar-provinces.geojson ./tmp/ne_10m_rivers_lake_centerlines_scale_rank/ne_10m_rivers_lake_centerlines_scale_rank.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./tmp/myanmar-labels.geojson ./tmp/myanmar-conflict-me.geojson combine-files \
 	-rename-layers countries,provinces,rivers,lakes,urban,places,me \
 	-join target=provinces ./data/myanmar-control.csv keys=shapeName,region \
 	-clip source=me target=countries \
