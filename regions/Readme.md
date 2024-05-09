@@ -7,5 +7,6 @@
 
 ## Myanmar Conflict
 
-- Myanmar Admin 2 data: https://data.humdata.org/dataset/geoboundaries-admin-boundaries-for-myanmar (CC BY 4)
+- Myanmar Admin 2-3 data: https://data.humdata.org/dataset/geoboundaries-admin-boundaries-for-myanmar (CC BY 4)
+- Better admin 3 data (USAID): https://data.mmanalytics.org/tr/dataset/border-shapefiles/resource/4c55b1a7-e9e1-40d6-9b16-c22e062727ec?inner_span=True
 - Presumed data source: https://specialadvisorycouncil.org/wp-content/uploads/2022/09/SAC-M-Briefing-Paper-Effective-Control-in-Myanmar-ENGLISH-2.pdf
