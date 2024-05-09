@@ -121,11 +121,14 @@ color_yellow_20=\#F7ECBA
 	-clip source=me target=places \
 	-simplify visvalingam percentage=.05 \
 	-filter-islands min-area=100km2 target=countries \
-	-snap \
+	-snap interval=.0005 fix-geometry target=provinces \
 	-clean \
 	-innerlines target="provinces" + name=provinces_lines \
 	-dissolve2 target="provinces" + name=mmr \
 	-filter target=countries where='ADM0_A3 !== "MMR"' \
+	-filter target=provinces where='control === "junta"' + name=provinces-junta \
+	-filter target=provinces where='control === "rebel"' + name=provinces-rebel \
+	-filter target=provinces where='control === "disputed"' + name=provinces-disputed \
 	-filter target=places where="feature_class === 'Admin-0 capital'" + name=places_capitals \
 	-filter target=places where="feature_class !== 'Admin-0 capital'" + name=places_towns \
 	-filter target=places_capitals where="true" + name=capitals_labels \
@@ -134,7 +137,7 @@ color_yellow_20=\#F7ECBA
 	-style where="ADM0_A3 === 'MMR'" fill='white' opacity=1 target="countries" \
 	-style fill='none' stroke='${color_blue_90}' stroke-width=2 target="mmr" \
 	-colorizer name=calcFill colors=red,${color_blue_20},gray nodata="transparent" categories="junta,rebel,disputed" \
-	-style fill="calcFill(control)" target=provinces \
+	-style fill="calcFill(control)" target=provinces-junta,provinces-rebel,provinces-disputed \
 	-style fill=${color_urban} target='urban' \
 	-style stroke=${color_river} stroke-width=1 target=rivers \
 	-style stroke=${color_river} stroke-width=1 fill="${color_river}" target=lakes \
@@ -142,11 +145,11 @@ color_yellow_20=\#F7ECBA
 	-style fill=${color_blue_50} target=me \
 	-symbols target=places_capitals type=square fill='${color_blue_90}' radius=6 \
 	-symbols target=places_towns type=circle fill='${color_blue_90}' radius=2 \
-	-style dy=-10 target=capitals_labels label-text=label_text stroke="${color_land}" stroke-width=${label_stroke} font-size=${label_size} font-family="${label_font}" fill="${color_blue_90}" css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
-	-style dy=-7 target=towns_labels label-text=label_text stroke="${color_land}" stroke-width=${label_stroke} font-size=${label_size_town} font-family="${label_font}" fill="${color_blue_90}" css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-style dy=-10 target=capitals_labels label-text=label_text font-size=${label_size} font-family="${label_font}" fill="${color_blue_90}" \
+	-style dy=-7 target=towns_labels label-text=label_text font-size=${label_size_town} font-family="${label_font}" fill="${color_blue_90}" \
 	-scalebar position="bottom-left" margin=30 label-position="top" style="a" label="200km" bar-width=2 \
 	-proj +proj=merc target=* \
-	-o $@ format=svg target=me,countries,provinces,urban,rivers,lakes,provinces_lines,mmr,places_towns,places_capitals,towns_labels,capitals_labels,scalebar fit-extent=me
+	-o $@ format=svg target=me,countries,provinces-junta,provinces-rebel,provinces-disputed,urban,rivers,lakes,provinces_lines,mmr,places_towns,places_capitals,towns_labels,capitals_labels,scalebar fit-extent=me
 
 ./output/myanmar-locator.svg:
 	mapshaper \
