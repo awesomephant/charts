@@ -48,10 +48,12 @@ def get_label_coords(point, label_text: str, label_pos: int, font_size: float):
 	label_vertical = label_positions[label_pos].x
 	label_horizontal = label_positions[label_pos].y
 	
-	font = ImageFont.truetype("../fonts/Merriweather/Merriweather-Regular.ttf", size=font_size)
+	# font = ImageFont.truetype("../fonts/Merriweather/Merriweather-Regular.ttf", size=font_size)
+	# bbox = font.getbbox(label_text)
+	# width = font.getlength(label_text)
+	width = len(label_text) * 2
+	bbox = (0,0,5,width)
 
-	bbox = font.getbbox(label_text)
-	width = font.getlength(label_text)
 	height = (bbox[3]) * .9
 
 	if (label_horizontal == "left"):
@@ -191,3 +193,17 @@ def place_labels(
 	)
 
 	return output_gdf
+
+bounding_box = (88,7,105,30)
+populated_places_raw = gp.read_file('../regions/tmp/ne_10m_populated_places_simple/ne_10m_populated_places_simple.shp')
+populated_places = populated_places_raw.set_crs(epsg=4326)
+
+capitals = populated_places.loc[
+    (populated_places["min_zoom"] < 5)
+    & (populated_places["geometry"].x > bounding_box[0])
+    & (populated_places["geometry"].x < bounding_box[2])
+    & (populated_places["geometry"].y > bounding_box[1])
+    & (populated_places["geometry"].y < bounding_box[3])
+    ].copy()
+
+label_points = place_labels(capitals, population_field="pop_max", time_limit=1000)
