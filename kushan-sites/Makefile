@@ -69,13 +69,45 @@ color_line=\#e64100
 
 ./output/kushan-locator.svg:
 	mapshaper \
-	-i ./tmp/ne_110m_land/ne_110m_land.shp ./tmp/map_extent.geojson combine-files \
-	-rename-layers land,me \
+	-i ./tmp/ne_110m_land/ne_110m_land.shp ./tmp/map_extent.geojson ./tmp/inset_bounds.geojson combine-files \
+	-rename-layers land,me,inset \
 	-simplify visvalingam percentage=.95 \
 	-clean \
 	-graticule polygon \
 	-style stroke=black stroke-width=5 \
 	-style target="land" fill="lightgray" stroke="black" stroke-width=1 \
 	-style target="me" fill="none" stroke="black" stroke-width=5 \
+	-style target="inset" fill="none" stroke="black" stroke-width=5 \
 	-proj +proj=nsper +h=1000000000 +lon_0=60 +lat_0=20 target=* densify \
-	-o $@ format=svg target=land,polygon,me fit-extent=land
+	-o $@ format=svg target=land,polygon,inset,me fit-extent=land
+
+./output/kushan-inset.svg:
+	mapshaper \
+	-i ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/ne_10m_rivers_lake_centerlines/ne_10m_rivers_lake_centerlines.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./data/greco-bactrian-kingdom.geojson ./data/kushan-script-sites.geojson ./tmp/inset_bounds.geojson combine-files \
+	-rename-layers countries,rivers,lakes,urban,gbk,sites,me \
+	-clip source=me target=countries \
+	-clip source=me target=rivers \
+	-clip source=me target=lakes \
+	-clip source=me target=urban \
+	-clip source=me target=sites \
+	-clean \
+	-points target=countries x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-graticule polygon \
+	-style fill=${color_water} \
+	-style stroke=black stroke-width=5 \
+	-style target="me" fill="none" stroke="black" stroke-width=5 \
+	-filter where="type === 'confirmed'" target=sites + name="sites_confirmed" \
+	-filter where="type === 'potential'" target=sites + name="sites_potential" \
+	-filter where="true" target=sites + name="sites_labels" \
+	-style label-text=name font-family="${label_font}" font-size=${label_size} fill="black" \
+	-style fill='none' stroke='black' fill="white" stroke-width=.5 css='mix-blend-mode: multiply' target="countries" \
+	-symbols target=sites_confirmed radius=3 type=circle fill='#ff6200' \
+	-symbols target=sites_potential radius=3 type=circle fill='blue' \
+	-style fill='black' opacity=.1 css='mix-blend-mode: multiply' target='urban' \
+	-style stroke=${color_water} stroke-width=1 target=rivers \
+	-style stroke=${color_water} stroke-width=1 fill="${color_water}" target=lakes \
+	-style target="country_labels" label-text=ADMIN font-size=${label_size} font-family="${label_font}" fill="black" \
+	-style target="sites_labels" label-text=name font-size=${label_size} font-family="${label_font}" fill="black" \
+	-scalebar position="bottom-right" margin=30 label-position="top" style="a" label="200km" \
+	-proj +proj=merc target=* \
+	-o $@ format=svg target=polygon,rivers,lakes,countries,sites_confirmed,sites_potential,country_labels,scalebar fit-extent=me
