@@ -72,7 +72,6 @@ color_river=\#82A7C9
 color_lake=\#CDD9E4
 color_line=\#e64100
 
-
 color_blue_90=\#080A0C
 color_blue_70=\#274868
 color_blue_60=\#336899

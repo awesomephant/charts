@@ -4,6 +4,8 @@ all: ./tmp vectors
 
 vectors: ./output ./output/north-korea.svg ./output/eu-nukes.svg
 
+prif_lu3: ./output ./output/yekaterinburg-locator.svg ./output/post-soviet-states.svg
+
 ./output:
 	mkdir -p output
 
@@ -24,8 +26,15 @@ color_line=\#e64100
 color_blue_90=\#080A0C
 color_blue_70=\#274868
 color_blue_50=\#4D8ECB
+color_blue_40=\#82a7c9
+color_blue_30=\#acc0d2
 color_blue_20=\#aD8ECB
 color_blue_10=\#F2F5F7
+
+color_orange_40=\#ef7f60
+color_orange_50=\#f06842
+color_orange_50=\#dc3609
+
 color_yellow_40=\#F2D75F
 color_yellow_30=\#EFDC8F
 color_yellow_20=\#F7ECBA
@@ -56,7 +65,7 @@ color_yellow_20=\#F7ECBA
 	-style fill=${color_urban} target='urban' \
 	-style stroke=${color_river} stroke-width=1 target=rivers \
 	-style stroke=${color_river} stroke-width=1 fill="${color_river}" target=lakes \
-	-style stroke=${color_blue_90} opacity=.15 css='mix-blend-mode: multiply' target=provinces \
+	-style stroke=${color_blue_90} css='mix-blend-mode: multiply' target=provinces \
 	-style fill=${color_blue_10} target=me \
 	-symbols target=places_capitals type=square fill='${color_blue_90}' radius=6 \
 	-symbols target=places_towns type=circle fill='${color_blue_90}' radius=2 \
@@ -163,3 +172,57 @@ color_yellow_20=\#F7ECBA
 	-style target="me" fill="none" stroke="black" stroke-width=5 \
 	-proj +proj=nsper +h=1000000000 +lon_0=95 +lat_0=10 target=* densify \
 	-o $@ format=svg target=land,polygon,me fit-extent=land
+
+./output/yekaterinburg-locator.svg:
+	mapshaper \
+	-i ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/ne_10m_admin_1_states_provinces/ne_10m_admin_1_states_provinces.shp ./tmp/russia-labels.geojson ./tmp/yekaterinburg.geojson ./tmp/yekaterinburg-me.geojson combine-files \
+	-rename-layers countries,provinces,places,yb,me \
+	-clip source=me target=countries \
+	-clip source=me target=provinces \
+	-clip source=me target=places \
+	-filter-islands min-area=100km2 target=countries \
+	-filter target=countries where='ADM0_A3==="RUS"' + name=russia \
+	-filter target=countries where='true' + name=land \
+	-filter target=russia where='true' + name=russia_outline \
+	-filter target=provinces where='iso_a2==="RU"' \
+	-filter target=places where='feature_class === "Admin-0 capital" && min_zoom < 3' + name=places_capitals \
+	-filter target=places_capitals where='true' + name=capitals_labels \
+	-snap interval=.0005 fix-geometry target=provinces \
+	-simplify visvalingam percentage=.065 \
+	-innerlines target=provinces \
+	-innerlines target=countries \
+	-dissolve target='land' \
+	-clean \
+	-style fill='${color_land}' stroke-width=1 stroke='${color_land_outline}' target='land' \
+	-style stroke='${color_blue_90}' stroke-width=1.5 target="russia_outline" \
+	-style fill="white" target="russia" \
+	-style stroke=${color_blue_20} target=provinces \
+	-style stroke=${color_blue_30} target=countries \
+	-style fill=${color_blue_10} target=me \
+	-symbols target=yb type=square fill="${color_blue_90}" radius=6 \
+	-symbols target=places_capitals type=circle fill='${color_blue_90}' radius=2 \
+	-style dy=-10 target=capitals_labels label-text=label_text font-size=${label_size} font-family="${label_font}" fill="${color_blue_90}" \
+	-proj +proj=merc target=* \
+	-o $@ format=svg target=me,land,countries,russia,provinces,russia_outline,yb,places_capitals,capitals_labels fit-extent=me
+
+./output/post-soviet-states.svg:
+	mapshaper \
+	-i ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/russia-labels.geojson ./tmp/yekaterinburg-me.geojson combine-files \
+	-rename-layers countries,places,me \
+	-clip source=me target=countries \
+	-clip source=me target=places \
+	-filter-islands min-area=100km2 target=countries \
+	-filter target=countries where='["ARM", "AZE", "BLR", "EST", "GEO", "KAZ", "KGZ", "LVA", "LTU", "MDA", "RUS", "TJK", "TKM", "UKR", "UZB"].includes(ADM0_A3)' + name=soviet_states \
+	-points target=soviet_states x=LABEL_X y=LABEL_Y + name="country_labels" \
+	-style label-text=NAME font-family="${label_font}" fill="black" font-size=${label_size} \
+	-filter target=places where="feature_class === 'Admin-0 capital' && min_zoom < 2" + name=places_capitals \
+	-filter target=places_capitals where="true" + name=capitals_labels \
+	-simplify visvalingam percentage=.065 \
+	-clean \
+	-style fill='${color_land}' stroke-width=.5 stroke='${color_land_outline}' target="countries" \
+	-style fill='${color_blue_30}' stroke-width=1.5 stroke='${color_blue_90}' target="soviet_states" \
+	-style fill=${color_blue_10} target=me \
+	-symbols target=places_capitals type=square fill='${color_blue_90}' radius=3 \
+	-style dy=-10 target=capitals_labels label-text=label_text stroke="${color_land}" stroke-width=${label_stroke} font-size=${label_size} font-family="${label_font}" fill="${color_blue_90}" css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-proj +proj=merc target=* \
+	-o $@ format=svg target=me,countries,soviet_states,country_labels fit-extent=me
