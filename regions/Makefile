@@ -226,3 +226,22 @@ color_yellow_20=\#F7ECBA
 	-style dy=-10 target=capitals_labels label-text=label_text stroke="${color_land}" stroke-width=${label_stroke} font-size=${label_size} font-family="${label_font}" fill="${color_blue_90}" css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
 	-proj +proj=merc target=* \
 	-o $@ format=svg target=me,countries,soviet_states,country_labels fit-extent=me
+
+./output/genoa-kaffa.svg:
+	mapshaper \
+	-i ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/genoa-trade-routes.geojson ./tmp/genoa-places.geojson ./tmp/genoa-me.geojson combine-files \
+	-rename-layers countries,routes,places,me \
+	-clip source=me target=countries \
+	-clip source=me target=places \
+	-filter-islands min-area=100km2 target=countries \
+	-filter target=routes where="name === 'genoa-kaffa'" \
+	-filter target=places where="true" + name=places_labels \
+	-simplify visvalingam percentage=.065 \
+	-clean \
+	-style stroke-width=2 stroke='${color_orange_50}' target="routes" \
+	-style fill='${color_land}' stroke-width=.5 stroke='${color_land_outline}' target="countries" \
+	-style fill=${color_blue_10} target=me \
+	-symbols target=places type=square fill='${color_blue_90}' radius=3 \
+	-style dy=-10 target=places_labels label-text=label_text stroke="${color_land}" stroke-width=${label_stroke} font-size=${label_size} font-family="${label_font}" fill="${color_blue_90}" css="paint-order: stroke;stroke-linecap: butt;stroke-linejoin: miter;" \
+	-proj +proj=merc target=* \
+	-o $@ format=svg target=me,countries,routes,places,places_labels fit-extent=me
