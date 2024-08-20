@@ -135,6 +135,7 @@ def place_labels(
 		gdf: gp.GeoDataFrame,
 		name_field: str = "name",
 		population_field : str = "population",
+		min_zoom_field : str = "min_zoom",
 		feature_class_field : str = "featurecla",
 		time_limit: int = 3000) -> gp.GeoDataFrame:
 
@@ -149,6 +150,7 @@ def place_labels(
 		state.append({
 		"feature_coords": feature_coords,
 		"feature_class": obj[feature_class_field],
+		"min_zoom": obj[min_zoom_field],
 		"label_text": label_text,
 		"font_size": font_size,
 		"label_pos": label_pos,
@@ -185,6 +187,7 @@ def place_labels(
 			"label_position_vertical": [l["label_pos_v"] for l in state],
 			"text_align_horizontal": [l["text_align"] for l in state],
 			"feature_class": [l["feature_class"] for l in state],
+			"min_zoom": [l["min_zoom"] for l in state],
 			# "geometry": [Polygon(rect_to_points(l["label_coords"])) for l in state]
 			"geometry": [Point(l["feature_coords"]) for l in state]
 		},
@@ -194,16 +197,16 @@ def place_labels(
 
 	return output_gdf
 
-bounding_box = (88,7,105,30)
-populated_places_raw = gp.read_file('../regions/tmp/ne_10m_populated_places_simple/ne_10m_populated_places_simple.shp')
-populated_places = populated_places_raw.set_crs(epsg=4326)
+# bounding_box = (88,7,105,30)
+# populated_places_raw = gp.read_file('../regions/tmp/ne_10m_populated_places_simple/ne_10m_populated_places_simple.shp')
+# populated_places = populated_places_raw.set_crs(epsg=4326)
 
-capitals = populated_places.loc[
-    (populated_places["min_zoom"] < 5)
-    & (populated_places["geometry"].x > bounding_box[0])
-    & (populated_places["geometry"].x < bounding_box[2])
-    & (populated_places["geometry"].y > bounding_box[1])
-    & (populated_places["geometry"].y < bounding_box[3])
-    ].copy()
+# capitals = populated_places.loc[
+#     (populated_places["min_zoom"] < 5)
+#     & (populated_places["geometry"].x > bounding_box[0])
+#     & (populated_places["geometry"].x < bounding_box[2])
+#     & (populated_places["geometry"].y > bounding_box[1])
+#     & (populated_places["geometry"].y < bounding_box[3])
+#     ].copy()
 
-label_points = place_labels(capitals, population_field="pop_max", time_limit=1000)
+# label_points = place_labels(capitals, population_field="pop_max", time_limit=1000)
