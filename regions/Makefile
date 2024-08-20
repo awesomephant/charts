@@ -24,7 +24,7 @@ color_line=\#e64100
 color_blue_90=\#080A0C
 color_blue_70=\#274868
 color_blue_50=\#4D8ECB
-color_blue_20=\#aD8ECB
+color_blue_20=\#cdd9e4
 color_blue_10=\#F2F5F7
 color_yellow_40=\#F2D75F
 color_yellow_30=\#EFDC8F
@@ -110,9 +110,10 @@ color_yellow_20=\#F7ECBA
 
 ./output/myanmar-control.svg:
 	mapshaper \
-	-i ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/myanmar-provinces.geojson ./tmp/ne_10m_rivers_lake_centerlines_scale_rank/ne_10m_rivers_lake_centerlines_scale_rank.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./tmp/myanmar-labels.geojson ./tmp/myanmar-conflict-me.geojson combine-files \
-	-rename-layers countries,provinces,rivers,lakes,urban,places,me \
+	-i ./tmp/ne_10m_land/ne_10m_land.shp ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./tmp/myanmar_township_boundaries/myanmar_township_boundaries.shp ./tmp/ne_10m_rivers_lake_centerlines_scale_rank/ne_10m_rivers_lake_centerlines_scale_rank.shp ./tmp/ne_10m_lakes/ne_10m_lakes.shp ./tmp/ne_10m_urban_areas/ne_10m_urban_areas.shp ./tmp/myanmar-labels.geojson ./tmp/myanmar-conflict-me.geojson combine-files \
+	-rename-layers land,countries,provinces,rivers,lakes,urban,places,me \
 	-join target=provinces ./data/myanmar-control.csv keys=TS,region \
+	-clip source=me target=land \
 	-clip source=me target=countries \
 	-clip source=me target=provinces \
 	-clip source=me target=rivers \
@@ -143,13 +144,14 @@ color_yellow_20=\#F7ECBA
 	-style stroke=${color_river} stroke-width=1 fill="${color_river}" target=lakes \
 	-style stroke=${color_blue_90} stroke-width=.5 opacity=1  css='mix-blend-mode: multiply' target=provinces_lines \
 	-style fill=${color_blue_50} target=me \
+	-style fill=${color_blue_50} stroke-width=40 stroke=lightgray target=land \
 	-symbols target=places_capitals type=square fill='${color_blue_90}' radius=6 \
 	-symbols target=places_towns type=circle fill='${color_blue_90}' radius=2 \
 	-style dy=-10 target=capitals_labels label-text=label_text font-size=${label_size} font-family="${label_font}" fill="${color_blue_90}" \
 	-style dy=-7 target=towns_labels label-text=label_text font-size=${label_size_town} font-family="${label_font}" fill="${color_blue_90}" \
 	-scalebar position="bottom-left" margin=30 label-position="top" style="a" label="200km" bar-width=2 \
 	-proj +proj=merc target=* \
-	-o $@ format=svg target=me,countries,provinces-junta,provinces-rebel,provinces-disputed,urban,rivers,lakes,provinces_lines,mmr,places_towns,places_capitals,towns_labels,capitals_labels,scalebar fit-extent=me
+	-o $@ format=svg target=me,land,countries,provinces-junta,provinces-rebel,provinces-disputed,urban,rivers,lakes,provinces_lines,mmr,places_towns,places_capitals,towns_labels,capitals_labels,scalebar fit-extent=me
 
 ./output/myanmar-locator.svg:
 	mapshaper \
@@ -163,3 +165,17 @@ color_yellow_20=\#F7ECBA
 	-style target="me" fill="none" stroke="black" stroke-width=5 \
 	-proj +proj=nsper +h=1000000000 +lon_0=95 +lat_0=10 target=* densify \
 	-o $@ format=svg target=land,polygon,me fit-extent=land
+
+./output/cables.svg:
+	mapshaper \
+	-i ./tmp/ne_10m_land/ne_10m_land.shp ./tmp/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp ./data/cables.geojson combine-files \
+	-rename-layers land,countries,cables \
+	-simplify visvalingam percentage=.02 \
+	-clean \
+	-graticule polygon \
+	-style target="polygon" fill=${color_blue_20} \
+	-style target="cables" stroke="rgba(0,0,0,1)" stroke-width=.5 \
+	-style target="land" fill="white" \
+	-style target="countries" stroke="${color_blue_20}" stroke-width=.5 \
+	-proj +proj=natearth target=* densify \
+	-o $@ format=svg target=polygon,land,countries,cables fit-extent=land

@@ -13,7 +13,6 @@ class Solution:
 					opening.pop(-1)
 				else:
 					return False
-				
 		return len(opening) == 0
 	
 assert Solution.isValid(None, "()") == True
