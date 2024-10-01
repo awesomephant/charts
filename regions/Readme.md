@@ -12,6 +12,10 @@
 - Presumed data source: https://specialadvisorycouncil.org/wp-content/uploads/2022/09/SAC-M-Briefing-Paper-Effective-Control-in-Myanmar-ENGLISH-2.pdf
 - Source: https://archive.ph/5eRdj
 
+## World Bathymetry
+
+- http://www.shadedrelief.com/blue-earth/
+
 ## Genoa Routes
 
 - Source: https://en.wikipedia.org/wiki/Genoese_colonies#/media/File:Repubblica_di_Genova.png
