@@ -1,0 +1,126 @@
+	#	Nursultan Nazarbayev Airport in Kazakhstan changed its location code from TSE to NQZ on 8th June 2020
+	# https://servicehub.amadeus.com/documents/20195/0/IATA-code-change-TSE-NQZ.pdf/ea9afe4f-e955-6f96-de1f-eee4fa4fef25?t=1591359091572
+	# The old identifier is still present in historical flight data, but not in current airport data
+	if ((x["destination_iata"] == "TSE") & (x["date"] < pd.Timestamp("2020-06-08"))):
+		x["destination_iata"] = "NQZ"
+
+	# Source: https://en.wikipedia.org/wiki/Chi%C8%99in%C4%83u_International_Airport
+	if ((x["destination_iata"] == "KIV") & (x["date"] < pd.Timestamp("2024-01-18"))):
+		x["destination_iata"] = "RMO"
+
+	# Closed airport, source: https://en.wikipedia.org/wiki/Siem_Reap_International_Airport
+	if ((x["destination_iata"] == "REP")):
+		return "KH"
+	
+	# Not present in data, Source: https://en.wikipedia.org/wiki/Doncaster_Sheffield_Airport
+	if ((x["destination_iata"] == "DSA")):
+		return "GB"
+
+	# Not present in data, Source: https://en.wikipedia.org/wiki/Lasham_Airfield
+	if ((x["destination_iata"] == "QLA")):
+		return "GB"
+	
+	# Berlin Schoenefeld closed on 25 October 2020, Source: https://en.wikipedia.org/wiki/Berlin_Sch%C3%B6nefeld_Airport
+	if ((x["destination_iata"] == "SXF") & (x["date"] < pd.Timestamp("2020-10-25"))):
+		return "DE"
+
+	# Berlin Tegel closed on 4 May 2021, Source: https://en.wikipedia.org/wiki/Berlin_Tegel_Airport
+	if ((x["destination_iata"] == "TXL") & (x["date"] < pd.Timestamp("2021-05-04"))):
+		return "DE"
+
+	# Manston Airport closed 15 May 2014, Source: https://en.wikipedia.org/wiki/Manston_Airport
+	# TODO drop the row if the flight came in after 2014
+	if ((x["destination_iata"] == "MSE")):
+		return "GB"
+
+	# Real airport not present in the data: https://en.wikipedia.org/wiki/Frankfurt_Egelsbach_Airport
+	if ((x["destination_iata"] == "QEF")):
+		return "DE"
+
+	# Real airport not present in the data: https://www.flightradar24.com/data/airports/zno
+	if ((x["destination_iata"] == "ZNO")):
+		return "DE"
+
+	# Real airport not present in the data: https://www.flightradar24.com/data/airports/qew
+	if ((x["destination_iata"] == "QEW")):
+		return "AT"
+
+	# Real airport not present in the data: https://www.flightradar24.com/data/airports/qel
+	if ((x["destination_iata"] == "QEL")):
+		return "SE"
+
+	# Real airport not present in the data: https://en.wikipedia.org/wiki/Gy%C5%91r-P%C3%A9r_International_Airport
+	if ((x["destination_iata"] == "QGY")):
+		return "HU"
+
+	# Real airport not present in the data: https://en.wikipedia.org/wiki/Soesterberg_Air_Base
+	if ((x["destination_iata"] == "UTC")):
+		return "NL"
+
+	# Real airport not present: https://en.wikipedia.org/wiki/RAF_Bentwaters
+	if ((x["destination_iata"] == "BWY")):
+		return "GB"
+
+	# Real airport not present: https://www.flightradar24.com/data/airports/xmu
+	if ((x["destination_iata"] == "XMU")):
+		return "FR"
+
+	# Real airport not present: https://en.wikipedia.org/wiki/Parchim_International_Airport
+	if ((x["destination_iata"] == "SZW")):
+		return "DE"
+
+	# Real airport not present: https://www.flightradar24.com/data/airports/qec
+	if ((x["destination_iata"] == "QEC")):
+		return "DK"
+
+	# Real airport not present: https://www.flightradar24.com/data/airports/qea
+	if ((x["destination_iata"] == "QEA")):
+		return "DK"
+
+	# Real airport closed 2011: https://de.wikipedia.org/wiki/Flugplatz_Lemwerder
+	if ((x["destination_iata"] == "XLW")):
+		return "DE"
+
+	# Real airport: https://en.wikipedia.org/wiki/Annemasse_Aerodrome
+	if ((x["destination_iata"] == "QNJ")):
+		return "FR"
+
+	# Real airport: https://en.wikipedia.org/wiki/Arcachon_%E2%80%93_La_Teste-de-Buch_Airport
+	if ((x["destination_iata"] == "XAC")):
+		return "FR"
+
+	# Real airport: https://en.wikipedia.org/wiki/Aix-en-Provence_Aerodrome
+	if ((x["destination_iata"] == "QXB")):
+		return "FR"
+
+	# Real airport: https://airportcodes.aero/znf
+	if ((x["destination_iata"] == "ZNF")):
+		return "DE"
+
+	# Closed airport: https://en.wikipedia.org/wiki/Portsmouth_Airport_(Hampshire)
+	if ((x["destination_iata"] == "PME")):
+		return "GB"
+
+ 	# Closed airport: https://en.wikipedia.org/wiki/Helsinki-Malmi_Airport
+	if ((x["destination_iata"] == "HEM")):
+		return "FI"
+
+ 	# Real airport: https://www.flightradar24.com/data/airports/dgx
+	if ((x["destination_iata"] == "DGX")):
+		return "GB"
+
+ 	# Real airport: https://airportcodes.aero/ndz
+	if ((x["destination_iata"] == "NDZ")):
+		return "DE"
+	
+	# Changed name, Source: https://en.wikipedia.org/wiki/Ganja_International_Airport
+	if ((x["destination_iata"] == "KVD") & (x["date"] < pd.Timestamp("2021-08-01"))):
+		return "AZ"
+
+ 	# Real airport: https://en.wikipedia.org/wiki/Vicenza_Airport
+	if ((x["destination_iata"] == "VIC")):
+		return "IT"
+
+ 	# Real airport: https://en.wikipedia.org/wiki/Hostomel_Airport
+	if ((x["destination_iata"] == "GML")):
+		return "UA"
