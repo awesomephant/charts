@@ -1,0 +1,343 @@
+country,location,lat,long,station_type,station_category
+
+Argentina,Paso Flores,40.7 S,70.6 W,3-component,Primary Seismological Stations
+Australia,"Warramunga,NT",19.9 S,134.3 E,Array,Primary Seismological Stations
+Argentina,Paso Flores,40.7 S,70.6 W,3-component,Primary Seismological Stations
+Australia,"Warramunga,NT",19.9 S,134.3 E,Array,Primary Seismological Stations
+Australia,"Alice Springs,NT",23.7 S,133.9 E,Array,Primary Seismological Stations 
+Australia,"Stephens Creek,NSW",31.9 S,141.6 E,3-component,Primary Seismological Stations 
+Australia,"Mawson,Antarctica",67.6 S,62.9 E,3-component,Primary Seismological Stations 
+Bolivia,La Paz,16.3 S,68.1 W,3-component,Primary Seismological Stations
+Brazil,Brasilia,15.6 S,48.0 W,3-component,Primary Seismological Stations 
+Canada,"Lac du Bonnet,Man.",50.2 N,95.9 W,3-component,Primary Seismological Stations
+Canada,"Yellowknife, N.W.T.",62.5 N,114.6 W,Array,Primary Seismological Stations
+Canada,"Schefferville,Quebec",54.8 N,66.8 W,3-component,Primary Seismological Stations
+Central African Republic,Bangui,5.2 N,18.4,E 3-component,Primary Seismological Stations 
+China,Hailar,49.5 N,119.8 E,Array,Primary Seismological Stations
+China,Lanzhou,36.0 N,103.7 E,Array,Primary Seismological Stations
+Colombia,El Rosal,4.9 N,74.3 W,3-component,Primary Seismological Stations
+"Cote d´lvoire",Dimbokro,6.7 N,4.9 W,3-component,Primary Seismological Stations
+Egypt,Luxor,26.0 N,33.5 E,Array,Primary Seismological Stations
+Finland,Lahti,61.4 N,26.1 E,Array,Primary Seismological Stations
+France,Tahiti,17.6 S,149.6 W,3-component,Primary Seismological Stations
+Germany,Freyung,48.8 N,13.7 E,Array,Primary Seismological Stations
+"Iran (Islamic Republic of)",Tehran,35.9 N,51.1 E,3-component,Primary Seismological Stations
+Japan,Matsushiro,36.5 N,138.2 E,Array,Primary Seismological Stations
+Kazakhstan,Makanchi,46.8 N,82.3 E,Array,Primary Seismological Stations
+Kenya,Kilimambogo,1.1 S,37.3 E,3-component,Primary Seismological Stations
+Mongolia,Songino,47.8 N,106.4E,Array,Primary Seismological Stations
+Norway,Hamar,60.8 N,10.8 E,Array,Primary Seismological Stations
+Norway,Karasjok,69.5 N,25.5 E,Array,Primary Seismological Stations
+Pakistan,Pari,33.7 N,73.3 E,Array,Primary Seismological Stations
+Paraguay,Villa Florida,26.3 S,57.3 W,3-component,Primary Seismological Stations
+Republic of Korea,Wonju,37.5 N,127.9 E,Array,Primary Seismological Stations
+Russian Federation,Khabaz,43.7 N,42.9 E,3-component,Primary Seismological Stations
+Russian Federation,Zalesovo,53.9 N,84.8 E,Array,Primary Seismological Stations
+Russian Federation,Norilsk,69.3 N,87.6 E,3-component,Primary Seismological Stations
+Russian Federation,Peleduy,59.6 N,112.6 E,Array,Primary Seismological Stations
+Russian Federation,Petropavlovsk-Kamchatskiy,53.1 N,157.7 E,Array,Primary Seismological Stations
+Russian Federation,Ussuriysk,44.2 N,132.0 E,Array,Primary Seismological Stations
+"Saudi Arabia",Haleban,23.4 N,44.5 E,Array,Primary Seismological Stations
+"South Africa",Boshof,28.6 S,25.3 E,3-component,Primary Seismological Stations
+Spain,Sonseca,39.7 N,4.0 W,Array,Primary Seismological Stations
+Thailand,"Chiang Mai",18.5 N,98.9 E,Array,Primary Seismological Stations
+Tunisia,Kesra,35.7 N,9.3 E,3-component,Primary Seismological Stations
+Turkey,Keskin,39.7 N,33.6 E,Array,Primary Seismological Stations
+Turkmenistan,Alibeck,37.9 N,58.1 E,Array,Primary Seismological Stations
+Ukraine,Malin,50.7 N,29.2 E,Array,Primary Seismological Stations
+"United States of America","Lajitas,Tx",29.3 N,103.7 W,Array,Primary Seismological Stations
+"United States of America","Mina,NV",38.4 N,118.3 W,Array,Primary Seismological Stations
+"United States of America","Pinedale,WY",42.8 N,109.6 W,Arra,Primary Seismological Stations
+"United States of America","Eielson, AK",64.8 N,146.9 W,Array,Primary Seismological Stations
+"United States of America","Vanda, Antarctica",77.5 S,161.9 E,3-component,Primary Seismological Stations
+
+Argentina,"Coronel Fontana",31.6 S,68.2 W,3-component,Auxiliary Seismological Stations
+Argentina,Ushuaia,54.8 S,68.4 W,3-component,Auxiliary Seismological Stations
+Armenia,Garni,40.1 N,44.7 E,3-component,Auxiliary Seismological Stations
+Australia,"Charters Towers,QDL",20.1 S,146.3 E,3-component,Auxiliary Seismological Stations
+Australia,"Fitzroy,Crossing,WA",18.1 S,125.6 E,3-component,Auxiliary Seismological Stations
+Australia,"Narrogin,WA",32.9 S,117.2 E,3-component,Auxiliary Seismological Stations
+Bangladesh,"Bariadhala,Chittagong",22.7 N,91.6 E,3-component,Auxiliary Seismological Stations
+Bolivia,"San Ignacia",16.0 S,61.1 W,3-component,Auxiliary Seismological Stations
+Botswana,Lobatse,25.0 S,25.6 E,3-component,Auxiliary Seismological Stations
+Brazil,Pitinga,0.7 S,60.0 W,3-component,Auxiliary Seismological Stations
+Brazil,Riachuelo,5.8 S,35.9 W,3-component,Auxiliary Seismological Stations
+Canada,Iqaluit,NU 63.7,N 68.5 W,3-component,Auxiliary Seismological Stations
+Canada,"Dease Lake,B.C.",58.4 N,130.0 W,3-component,Auxiliary Seismological Stations
+Canada,"Sadowa,Ont.",44.8 N,79.1 W,3-component,Auxiliary Seismological Stations
+Canada,"Bella Bella,B.C.",52.2 N,128.1 W,3-component,Auxiliary Seismological Stations
+Canada,"Resolute,NU",74.7 N,94.9 W,3-component,Auxiliary Seismological Stations
+Canada,"Inuvik,N.W.T.",68.3 N,133.5 W,3-component,Auxiliary Seismological Stations
+Chile,"Easter Island",27.1 S,109.3 W,3-component,Auxiliary Seismological Stations
+Chile,"Limon Verde",22.6 S,68.9 W,3-component,Auxiliary Seismological Stations
+China,Baijiatuan,40.0 N,116.2 E,3-component,Auxiliary Seismological Stations
+China,Kunming,25.1 N,102.7 E,3-component,Auxiliary Seismological Stations
+China,Sheshan,31.1 N,121.2 E,3-component,Auxiliary Seismological Stations
+China,Xi’an,34.0 N,108.9 E,3-component,Auxiliary Seismological Stations
+"Cook Islands",Rarotonga,21.2 S,159.8 W,3-component,Auxiliary Seismological Stations
+"Costa Rica","Las Juntas de Abangares",10.3 N,85.0 W,3-component,Auxiliary Seismological Stations
+"Czech Republic",Vranov,49.3 N,16.6 E,3-component,Auxiliary Seismological Stations
+Denmark,"Søndre Strømfjord,Greenland",67.0 N,50.6 W,3-component,Auxiliary Seismological Stations
+Djibouti,"Arta Tunnel",11.5 N,42.8 E,3-component,Auxiliary Seismological Stations
+Egypt,Kottamya,29.9 N,31.8 E,3-component,Auxiliary Seismological Stations
+Ethiopia,Furi,8.9 N,38.7 E,3-component,Auxiliary Seismological Stations
+Fiji,"Monasavu,Viti Levu",17.7 S,178.1 E,3-component,Auxiliary Seismological Stations
+France,"Mont Dzumac,New Caledonia",22.1 S,166.4 E,3-component,Auxiliary Seismological Stations
+France,"Montagne des Pères",GF 5.1 N,52.6 W,3-component,Auxiliary Seismological Stations
+Gabon,Masuku,1.7 S,13.6 E,3-component,Auxiliary Seismological Stations
+"Germany/South Africa","SANAE Station,Antarctica",71.7 S,2.8 W,3-component,Auxiliary Seismological Stations
+Greece,"Anogia,Crete",35.3 N,24.9 E,3-component,Auxiliary Seismological Stations
+Guatemala,"El Apazote",15.0 N,90.5 W,3-component,Auxiliary Seismological Stations
+Iceland,Borgarnes,64.7 N,21.3 W,3-component,Auxiliary Seismological Stations
+Indonesia,"Lembang, Jawa Barat",6.8 S,107.6 E,3-component,Auxiliary Seismological Stations
+Indonesia,"Jayapura, Irian Jaya",2.5 S,140.7 E,3-component,Auxiliary Seismological Stations
+Indondesia,"Sorong, Irian Jaya",0.9 S,131.3 E,3-component,Auxiliary Seismological Stations
+Indonesia,"Parapat, Sumatera",2.7 N,98.9 E,3-component,Auxiliary Seismological Stations
+Indonesia,"Kappang, Sulawesi Selatan",5.0 S,119.8 E,3-component,Auxiliary Seismological Stations
+Indonesia,"Baumata, Timur",10.2 S,123.7 E,3-component,Auxiliary Seismological Stations
+"Iran (Islamic Republic of)",Kerman,30.0 N,56.8 E,3-component,Auxiliary Seismological Stations
+"Iran (Islamic Republic of)",Shushtar,32.1 N,48.8 E,3-component,Auxiliary Seismological Stations
+Israel,Eilath,29.7 N,35.0 E,3-component,Auxiliary Seismological Stations
+Israel,Mount Meron,33.0 N,35.4 E,Array,Auxiliary Seismological Stations
+Italy,"Valguarnera, Sicily",37.5 N,14.4 E,3-component,Auxiliary Seismological Stations
+Japan,"Ohita, Kyushu",33.1 N,130.9 E,3-component,Auxiliary Seismological Stations
+Japan,"Kunigami, Okinawa",26.8 N,128.3 E,3-component,Auxiliary Seismological Stations
+Japan,"Hachijojima, Izu Islands",33.1 N,139.8 E,3-component,Auxiliary Seismological Stations
+Japan,"Kamikawa-asahi, Hokkaido",44.1 N,142.6 E,3-component,Auxiliary Seismological Stations
+Japan,"Chichijima, Ogasawara",27.1 N,142.2 E,3-component,Auxiliary Seismological Stations
+Jordan,"Tel-Alasfar",32.2 N,36.9 E,3-component,Auxiliary Seismological Stations
+Kazahkstan,Borovoye,53.0 N,70.4 E,Array,Auxiliary Seismological Stations
+Kazahkstan,Kurchatov,50.7 N,78.6 E,Array,Auxiliary Seismological Stations
+Kazahkstan,Aktyubinsk,50.4 N,58.0 E,3-component,Auxiliary Seismological Stations
+Kyrgyzstan,Ala-Archa,42.6 N,74.5 E,3-component,Auxiliary Seismological Stations
+Madagascar,Ambohidratompo,18.6 S,47.2 E,3 component,Auxiliary Seismological Stations
+Mali,Kowa,14.5 N,4.0 W,3-component,Auxiliary Seismological Stations
+Mexico,"Tepich, Quintana Roo",20.4 N,88.5 W,3-component,Auxiliary Seismological Stations
+Mexico,"Colonia Cuauhtémoc Matias Romero,Oaxaca",17.1 N,94.9 W,3-component,Auxiliary Seismological Stations
+Mexico,"La Paz, Baja California Sur",24.1 N,110.3 W,3-component,Auxiliary Seismological Stations
+Morocco,"Midelt",32.8,N 4.6 W,3-component,Auxiliary Seismological Stations
+Namibia,Tsumeb,19.2 S,17.6 E,3-component,Auxiliary Seismological Stations
+Nepal,Everest,28.0 N,86.8 E,3-component,Auxiliary Seismological Stations
+New Zealand,"Rata Peaks, South Island",43.7 S,171.1 E,3-component,Auxiliary Seismological Stations
+New Zealand,"Raoul Island",29.3 S,177.9 W,3-component,Auxiliary Seismological Stations
+New Zealand,"Urewera, North Island",38.3 S,177.1 E,3-component,Auxiliary Seismological Stations
+Norway,Spitsbergen,78.2 N,16.4 E,Array,Auxiliary Seismological Stations
+Norway,Jan Mayen,71.0 N,8.5 W,3-component,Auxiliary Seismological Stations
+Oman,"Wadi Sarin",23.2 N,58.6 E,3-component,Auxiliary Seismological Stations
+"Papua New Guinea","Port Moresby",9.4 S,147.2 E,3-component,Auxiliary Seismological Stations
+"Papua New Guinea",Keravat,4.3 S,152.0 E,3-component,Auxiliary Seismological Stations
+Peru,Atahualpa,7.0 S,78.4 W,3-component,Auxiliary Seismological Stations
+Peru,Nana,12.0 S,76.8 W,3-component,Auxiliary Seismological Stations
+Philippines,"Davao,Mindanao",7.1 N,125.6 E,3-component,Auxiliary Seismological Stations
+Philippines,"Tagaytay,Luzon",14.1 N,120.9 E,3-component,Auxiliary Seismological Stations
+Romania,"Muntele Rosu",45.5 N,25.9 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Kirov,58.6 N,49.4 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Kislovodsk,44.0 N,42.7 E,Array,Auxiliary Seismological Stations
+"Russian Federation",Obninsk,55.1 N,36.6 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Arti,56.4 N,58.4 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Seymchan,62.9 N,152.4 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Talaya,51.7 N,103.6 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Yakutsk,62.0 N,129.7 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Kuldur,49.2 N,131.8 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Bilibino,68.0 N,166.4 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Tiksi,71.6 N,128.9 E,3-component,Auxiliary Seismological Stations
+"Russian Federation","Yuzhno-Sakhalinsk",47.0 N,142.8 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Magadan,59.6 N,150.8 E,3-component,Auxiliary Seismological Stations
+"Russian Federation",Belogornoe,52.4 N,47.6 E,3-component,Auxiliary Seismological Stations
+Samoa,Afiamalu,13.9 S,171.8 W,3-component,Auxiliary Seismological Stations
+"Saudi Arabia","Dhaban Al-Janub",17.7 N,43.5 E,3-component,Auxiliary Seismological Stations
+Senegal,Babate,14.7 N,16.6 W,3-component,Auxiliary Seismological Stations
+"Solomon Islands","Honiara,Guadalcanal",9.4 S,159.9 E,3-component,Auxiliary Seismological Stations
+"South Africa",Sutherland,32.4 S,20.8 E,3-component,Auxiliary Seismological Stations
+"Sri Lanka",Pallekele,7.3 N,80.7 E,3-component,Auxiliary Seismological Stations
+Sweden,Hagfors,60.1 N,13.7 E,Array,Auxiliary Seismological Stations
+Switzerland,Davos,46.8 N,9.9 E,3-component,Auxiliary Seismological Stations
+Uganda,Mbarara,0.6 S,30.7 E,3-component,Auxiliary Seismological Stations
+"United Kingdom",Eskdalemuir,55.3 N,3.2 W,Array,Auxiliary Seismological Stations
+"United States of America","Guam,Marianas Islands",13.6 N,144.9 E,3-component,Auxiliary Seismological Stations
+"United States of America","Palmer Station,Antarctica",64.8 S,64.0 W,3-component,Auxiliary Seismological Stations
+"United States of America","Tuckaleechee Caverns",35.7 N,83.8 W,3-component,Auxiliary Seismological Stations
+"United States of America","Piñon Flat",CA 33.6 N,116.5 W,3-component,Auxiliary Seismological Stations
+"United States of America","Yreka,CA",41.7 N,122.7 W,3-component,Auxiliary Seismological Stations
+"United States of America","Kodiak Island,AK",57.8 N,152.6 W,3-component,Auxiliary Seismological Stations
+"United States of America","Albuquerque,NM",34.9 N,106.5 W,3-component,Auxiliary Seismological Stations
+"United States of America","Shemya Island",AK 52.7 N,174.1 E,3-component,Auxiliary Seismological Stations
+"United States of America","Elko,NV",40.7 N,115.2 W,3-component,Auxiliary Seismological Stations
+"United States of America","South Pole,Antarctica",89.9 S,145.0 W,3-component,Auxiliary Seismological Stations
+"United States of America","Newport,WA",48.3 N,117.1 W,3-component,Auxiliary Seismological Stations
+"United States of America","San Juan,PR",18.1 N,66.2 W,3-component,Auxiliary Seismological Stations
+Venezuela,"Santo Domingo",8.9 N,70.6 W,3-component,Auxiliary Seismological Stations
+Venezuela,"Puerto la Cruz",10.2 N,64.6 W,3-component,Auxiliary Seismological Stations
+Zambia,Lusaka,15.3 S,28.2 E,3-component,Auxiliary Seismological Stations
+Zimbabwe,Matopos,20.4 S,28.5 E,3-component,Auxiliary Seismological Stations
+
+Argentina,"Buenos Aires",34.5 S,58.5 W,,Radionuclide Stations
+Argentina,Salta,24.8 S,65.5 W,,Radionuclide Stations
+Argentina,Bariloche,41.1 S,71.2 W,,Radionuclide Stations
+Australia,"Melbourne, VIC",37.7 S,145.1 E,,Radionuclide Stations
+Australia,"Mawson, Antarctica",67.6 S,62.9 E,,Radionuclide Stations
+Australia,"Townsville, QLD",19.2 S,146.8 E,,Radionuclide Stations
+Australia,"Macquarie Island",54.5 S,158.9 E,,Radionuclide Stations
+Australia,Cocos Islands,12.2 S,96.8 E,,Radionuclide Stations
+Australia,"Darwin, NT",12.4 S,130.9 E,,Radionuclide Stations
+Australia,"Perth, WA",31.9 S,116.0 E,,Radionuclide Stations
+Brazil,"Rio de Janeiro",23.0 S,43.4 W,,Radionuclide Stations
+Brazil,Recife,7.8 S,35.1 W,,Radionuclide Stations
+Cameroon,Edea,3.8 N,10.2 E,,Radionuclide Stations
+Canada,Sidney,48.7 N,123.5 W,,Radionuclide Stations
+Canada,"Resolute,NU",74.7 N,95.0 W,,Radionuclide Stations
+Canada,"Yellowknife,N.W.T.",62.5 N,114.5 W,,Radionuclide Stations
+Canada,"St. John’s N.L.",47.6 N,52.7 W,,Radionuclide Stations
+Chile,"Punta Arenas",53.1 S,70.9 W,,Radionuclide Stations
+Chile,"Hanga Roa,Easter Island",27.1 S,109.3 W,,Radionuclide Stations
+China,Beijing,40.0 N,116.4 E,,Radionuclide Stations
+China,Lanzhou,36.0 N,104.0 E,,Radionuclide Stations
+Chinam,Guangzhou,23.1 N,113.3 E,,Radionuclide Stations
+"Cook Islands",Rarotonga,21.2 S,159.8 W,,Radionuclide Stations
+Ecuador,"Isla Santa Cruz,Galápagos Islands",0.7 S,90.3 W,,Radionuclide Stations
+Ethiopia,"Addis Ababa",9.1 N,38.8 E,,Radionuclide Stations
+Fiji,Nadi,17.8 S,177.4 E,,Radionuclide Stations
+France,"Papeete,Tahiti",17.6 S,149.6 W,,Radionuclide Stations
+France,"Pointe-à-Pitre,Guadeloupe",16.3 N,61.5 W,,Radionuclide Stations
+France,Réunion,20.9 S,55.6 E,,Radionuclide Stations
+France,"Port-aux-Français,Kerguelen",49.4 S,70.3 E,,Radionuclide Stations
+France,"Kourou,French Guiana",5.2 N,52.7 W,,Radionuclide Stations
+France,"Dumont d’Urville,Antarctica",66.7 S,140.0 E,,Radionuclide Stations
+Germany,"Schauinsland/Freiburg",47.9 N,7.9 E,,Radionuclide Stations
+Iceland,Reykjavik,64.1 N,21.9 W,,Radionuclide Stations
+"Iran (Islamic Republic of)",Tehran,35.0 N,52.0 E,,Radionuclide Stations
+Japan,Okinawa,26.5 N,127.9 E,,Radionuclide Stations
+Japan,"Takasaki,Gunma",36.3 N,139.1 E,,Radionuclide Stations
+Kiribati,Kiritimati,2.0 N,157.4 W,,Radionuclide Stations
+Kuwait,"Kuwait City",29.3 N,47.9 E,,Radionuclide Stations
+Libya,Misratah,32.4 N,15.0 E,,Radionuclide Stations
+Malaysia,"Tanah Rata",4.5 N,101.4 E,,Radionuclide Stations
+Mauritania,Nouakchott,18.1 N,15.9 W,,Radionuclide Stations
+Mexico,"Guerrero Negro,Baja California",28.0 N,114.1 W,,Radionuclide Stations
+Mongolia,Ulaanbaatar,47.9 N,106.3 E,,Radionuclide Stations
+"New Zealand","Chatham Island",43.8 S,176.5 W,,Radionuclide Stations
+"New Zealanad",Kaitaia,35.1 S,173.3 E,,Radionuclide Stations
+Niger,Agadez,17.0 N,8.0 E,,Radionuclide Stations
+Norway,Spitsbergen,78.2 N,15.4 E,,Radionuclide Stations
+Panama,"Panama City",9.0 N,79.5 W,,Radionuclide Stations
+"Papua New Guinea","Kavieng,New Ireland",2.6 S,150.8 E,,Radionuclide Stations
+Philippines,Tanay,14.6 N,121.4 E,,Radionuclide Stations
+Portugal,"Ponta Delgada,São Miguel,Azores",37.7 N,25.7 W,,Radionuclide Stations
+"Russian Federation",Kirov,58.6 N,49.4 E,,Radionuclide Stations
+"Russian Federation",Norilsk,69.3 N,87.5 E,,Radionuclide Stations
+"Russian Federation",Peleduy,59.6 N,112.6 E,,Radionuclide Stations
+"Russian Federation",Bilibino,68.0 N,166.4 E,,Radionuclide Stations
+"Russian Federation",Ussuriysk,44.2 N,132.0 E,,Radionuclide Stations
+"Russian Federation",Zalesovo,53.9 N,84.8 E,,Radionuclide Stations
+"Russian Federation","Petropavlovsk-Kamchatskiy",53.1 N,158.8 E,,Radionuclide Stations
+"Russian Federation",Dubna,56.7 N,37.3 E,,Radionuclide Stations
+"South Africa","Cape Town",34.1 S,18.3 E,,Radionuclide Stations
+Sweden,Stockholm,59.4 N,17.9 E,,Radionuclide Stations
+"United Republic of Tanzania","Dar es Salaam",6.8 S,39.2 E,,Radionuclide Stations
+Thailand,Bangkok,14.0 N,100.0 E,,Radionuclide Stations
+"United Kingdom","BIOT/Chagos Archipelago",7.3 S,72.4 E,,Radionuclide Stations
+"United Kingdom","St. Helena",15.9 S,5.7 W,,Radionuclide Stations
+"United Kingdom","Tristan da Cunha",37.1 S,12.3 W,,Radionuclide Stations
+"United Kingdom","Halley,Antarctica",76.0 S,28.0 W,,Radionuclide Stations
+"United States of America","Sacramento,CA",38.7 N,121.4 W,,Radionuclide Stations
+"United States of America","Sand Point,AK",55.3 N,160.5 W,,Radionuclide Stations
+"United States of America","Melbourne,FL",28.1 N,80.6 W,,Radionuclide Stations
+"United States of America","Palmer Station,Antarctica",64.8 S,64.1 W,,Radionuclide Stations
+"United States of America","Ashland,KS",37.2 N,99.8 W,,Radionuclide Stations
+"United States of America","Charlottesville,VA",38.0 N,78.4 W,,Radionuclide Stations
+"United States of America","Salchaket,AK",64.7 N,147.1 W,,Radionuclide Stations
+"United States of America","Wake Island",19.3 N,166.6 E,,Radionuclide Stations
+"United States of America","Midway Islands",28.2 N,177.4 W,,Radionuclide Stations
+"United States of America","Oahu,HI",21.5 N,158.0 W,,Radionuclide Stations
+"United States of America","Upi,Guam",13.6 N,144.9 E,,Radionuclide Stations
+
+
+Argentina,"Buenos Aires",,,,Radionuclide Laboratories
+Australia,"Melbourne, VIC",,,,Radionuclide Laboratories
+Austria,Seibersdorf,,,,Radionuclide Laboratories
+Brazil,"Rio de Janeiro",,,,Radionuclide Laboratories
+Canada,"Ottawa, Ontario",,,,Radionuclide Laboratories
+China,Beijing,,,,Radionuclide Laboratories
+Finland,Helsinki,,,,Radionuclide Laboratories
+France,"Bruyères-le-Chatel",,,,Radionuclide Laboratories
+Israel,Yavne,,,,Radionuclide Laboratories
+Italy,Rome,,,,Radionuclide Laboratories
+Japan,"Tokai, Ibaraki",,,,Radionuclide Laboratories
+"New Zealand",Christchurch,,,,Radionuclide Laboratories
+"Russian Federation",Moscow,,,,Radionuclide Laboratories
+"South Africa",Pelindaba,,,,Radionuclide Laboratories
+"United Kingdom Aldermaston","Reading, Berkshire",,,,Radionuclide Laboratories
+"United States of America","Richland, WA",,,,Radionuclide Laboratories
+
+Australia,"Cape Leeuwin, WA",34.3 S,115.2 E,Hydrophone,Hydroacoustic Stations
+Canada,"Haida Gwaii,B.C.",53.3 N,132.5 W,T-phase,Hydroacoustic Stations
+Chile,"Juan Fernández Island",33.6 S,78.8 W,Hydrophone,Hydroacoustic Stations
+France,"Crozet Islands",46.4 S,51.9 E,Hydrophone,Hydroacoustic Stations
+France,Guadeloupe,16.3 N,61.1 W,T-phase,Hydroacoustic Stations
+Mexico,"Socorro Island",18.7 N,110.9 W,T-phase,Hydroacoustic Stations
+Portugal,Flores,39.4 N,31.2 W,T-phase,Hydroacoustic Stations
+"United Kingdom","BIOT/Chagos Archipelago",7.3 S,72.4 E,Hydrophone,Hydroacoustic Stations
+"United Kingdom","Tristan da Cunha",37.1 S,12.3 W,T-phase,Hydroacoustic Stations
+"United States of America",Ascension,8.0 S,14.4 W,Hydrophone,Hydroacoustic Stations
+"United States of America","Wake Island",19.3 N,166.6 E,Hydrophone,Hydroacoustic Stations
+
+Argentina,Pilcaniyeu,41.1 S,70.7 W,,Infrasound Stations
+Argentina,Ushuaia,54.6 S,67.3 W,,Infrasound Stations
+Australia,"Davis Base,Antarctica",68.6 S,78.1 E,,Infrasound Stations
+Australia,Shannon,34.6 S,116.4 E,,Infrasound Stations
+Australia,"Hobart,TAS",42.5 S,147.7 E,,Infrasound Stations
+Australia,"Cocos Islands",12.2 S,96.8 E,,Infrasound Stations
+Australia,"Warramunga,NT",19.9 S,134.3 E,,Infrasound Stations
+Bolivia,"La Paz",16.2 S,68.5 W,,Infrasound Stations
+Brazil,Brasilia,15.6 S,48.0 W,,Infrasound Stations
+Canada,"Lac du Bonnet,Man.",50.2 N,96.0 W,,Infrasound Stations
+"Cabo Verde","Cape Verde Islands",15.2 N,23.2 W,,Infrasound Stations
+"Central African Republic",Bangui,5.2 N,18.4 E,,Infrasound Stations
+Chile,"Easter Island",27.1 S,109.4 W,,Infrasound Stations
+Chile,"Robinson Crusoe Island",33.6 S,78.8 W,,Infrasound Stations
+China,Beijing,39.6 N,115.9 E,,Infrasound Stations
+China,Kunming,25.3 N,102.7 E,,Infrasound Stations
+"Côte d’Ivoire",Dimbokro,6.7 N,4.9 W,,Infrasound Stations
+Denmark,"Qaanaaq,Greenland",77.5 N,69.3 W,,Infrasound Stations
+Djibouti,Djibouti,11.5 N,43.2 E,,Infrasound Stations
+Ecuador,"Isla Santa Cruz,Galápagos Islands",0.6 S,90.4 W,Infrasound Stations
+France,"Marquesas Islands",8.9 S,140.2 W,,Infrasound Stations
+France,"Port Laguerre,New Caledonia",22.2 S,166.8 E,,Infrasound Stations
+France,Kerguelen,49.3 S,70.3 E,,Infrasound Stations
+France,Tahiti,17.8 S,149.3 W,,Infrasound Stations
+France,Guadeloupe,16.1 N,61.6 W,,Infrasound Stations
+
+Germany,Freyung,48.9 N,13.7 E,,Infrasound Stations
+German,"Georg von Neumayer,Antarctica",70.7 S,8.3 W,,Infrasound Stations
+"Iran (Islamic Republic of)",Tehran,35.7 N,51.4 E,,Infrasound Stations
+Japan,Isumi,35.3 N,140.3 E,,Infrasound Stations
+Kazakhstan,Aktyubinsk,50.4 N,58.0 E,,Infrasound Stations
+Kenya,Nairobi,1.3 S,36.8 E,,Infrasound Stations
+Madagascar,Antananarivo,19.0 S,47.3 E,,Infrasound Stations
+Mongolia,Songino,47.8 N,106.4 E,,Infrasound Stations
+Namibia,Tsumeb,19.2 S,17.6 E,,Infrasound Stations
+New Zealand,Chatham Island,43.9 S,176.5 W,,Infrasound Stations
+Norway,Bardufoss,69.1 N,18.6 E,,Infrasound Stations
+Pakistan,"Rahimyar Khan",28.2 N,70.3 E,,Infrasound Stations
+Palau,Palau,7.5 N,134.5 E,,Infrasound Stations
+"Papua New Guinea",Keravat,4.3 S,152.0 E,,Infrasound Stations
+Paraguay,"Villa Florida",26.3 S,57.3 W,,Infrasound Stations
+Portugal,"Graciosa,Azores",39.0 N,28.0 W,,Infrasound Stations
+"Russian Federation",Dubna,56.7 N,37.3 E,,Infrasound Stations
+"Russian Federation","Petropavlovsk-Kamchatskiy",53.1 N,157.7 E,,Infrasound Stations
+"Russian Federation",Ussuriysk,44.2 N,132.0 E,,Infrasound Stations
+"Russian Federation",Zalesovo,53.9 N,84.8 E,,Infrasound Stations
+South Africa,Boshof,28.6 S,25.3 E,,Infrasound Stations
+Tunisia,Kesra,35.8 N,9.3 E,,Infrasound Stations
+"United Kingdom","Tristan da Cunha",37.1 S,12.3 W,,Infrasound Stations
+"United Kingdom",Ascension,7.9 S,14.4 W,,Infrasound Stations
+"United Kingdom",Bermuda,32.3 N,64.7 W,,Infrasound Stations
+"United Kingdom","BIOT/Chagos Archipelago",7.4 S,72.5 E,,Infrasound Stations
+"United States of America","Fairbanks, AK",64.9 N,147.9 W,,Infrasound Stations
+"United States of America","Palmer Station, Antarctica",64.8 S,64.1 W,,Infrasound Stations
+"United States of America","Windless Bight ,Antarctica",77.7 S,167.6 E,,Infrasound Stations
+"United States of America","Newport, WA",48.3 N,117.1 W,,Infrasound Stations
+"United States of America","Piñon Flat, CA",33.6 N,116.5 W,,Infrasound Stations
+"United States of America","Midway Islands",28.2 N,177.4 W,,Infrasound Stations
+"United States of America","Hawaii, HI",19.6 N,155.9 W,,Infrasound Stations
+"United States of America","Wake Island",19.3 N,166.6 E,,Infrasound Stations
