@@ -6,3 +6,6 @@ abolish-job-applications/
 __pycache__/
 .DS_Store
 *.ai
+
+/trucks/data/*
+!/trucks/data/.gitkeep
