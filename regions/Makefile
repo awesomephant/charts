@@ -10,7 +10,7 @@ prif_lu3: ./output ./output/yekaterinburg-locator.svg ./output/post-soviet-state
 	mkdir -p output
 
 ./tmp:
-	mkdir -p output
+	mkdir -p tmp
 
 label_size=16
 label_size_town=14
