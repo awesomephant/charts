@@ -25,7 +25,7 @@ distro @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/distro_
 et-xmlfile==1.1.0
 exceptiongroup @ file:///home/conda/feedstock_root/build_artifacts/exceptiongroup_1704921103267/work
 executing @ file:///home/conda/feedstock_root/build_artifacts/executing_1698579936712/work
-fiona==1.9.6
+fiona==1.10.0
 fonttools==4.49.0
 GDAL @ file:///Users/runner/miniforge3/conda-bld/gdal-split_1708278336045/work/build/swig/python
 geopandas==1.0.1
