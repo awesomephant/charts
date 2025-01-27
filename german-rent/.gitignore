@@ -2,3 +2,4 @@ node_modules
 
 tiles/*.mbtiles
 tiles/*.versatiles
+tiles/*.gz

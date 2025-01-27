@@ -3,9 +3,12 @@
 ## Contributing
 
 - `make` to download all required data
-- `brew install tippecanoe`
+- `brew install tippecanoe` (Mac/Linux only)
+- `cargo install versatiles`
 
 ## Notes
+
+versatiles server -s ./tiles/frontend.br.tar.gz --ip 127.0.0.1 "[rent]./tiles/rent_merged.versatiles" "[osm]https://storage.googleapis.com/versatiles/download/planet/planet-20240101.versatiles"
 
 ```mermaid
 flowchart TB
