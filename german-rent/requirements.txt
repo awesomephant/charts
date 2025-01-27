@@ -71,7 +71,7 @@ pytz==2024.1
 pyzmq @ file:///Users/runner/miniforge3/conda-bld/pyzmq_1701783269366/work
 requests @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b3tnputioh/croot/requests_1707355573919/work
 ruamel.yaml @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/ruamel.yaml_1699241608430/work
-setuptools==68.2.2
+setuptools==70.0.0
 shapely==2.0.3
 six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
 stack-data @ file:///home/conda/feedstock_root/build_artifacts/stack_data_1669632077133/work
