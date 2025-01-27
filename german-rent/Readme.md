@@ -2,7 +2,8 @@
 
 ## Contributing
 
-- `make` to download all required data (requires 13GB space)
+- `make` to download all required data
+- `brew install tippecanoe`
 
 ## Notes
 

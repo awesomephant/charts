@@ -1,4 +1,4 @@
 node_modules
 
-./tilemaker/output/
-./tilemaker/data/*
+tiles/*.mbtiles
+tiles/*.versatiles
