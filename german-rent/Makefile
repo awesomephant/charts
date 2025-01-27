@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: ./analysis/data ./analysis/tmp ./analysis/data/Zensus2022_Durchschn_Nettokaltmiete.zip ./analysis/data/Zensus2022_Durchschn_Nettokaltmiete ./analysis/data/ne_110m_admin_0_countries.zip
+all: ./analysis/data ./analysis/tmp ./analysis/data/Zensus2022_Durchschn_Nettokaltmiete.zip ./analysis/data/ne_110m_admin_0_countries.zip
 
 ./analysis/data:
 	mkdir -p ./analysis/data
