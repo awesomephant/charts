@@ -7,5 +7,6 @@ __pycache__/
 .DS_Store
 *.ai
 
+/tariffs/data/*
 /trucks/data/*
 !/trucks/data/.gitkeep
