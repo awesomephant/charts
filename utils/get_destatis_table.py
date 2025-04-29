@@ -1,0 +1,120 @@
+from urllib import parse
+import requests
+import xmltodict
+import time
+import re
+
+def get_destatis_table(token: str, password: str, tables: list[str], start_year: int, attributes: dict, end_year: int = None) -> str:
+
+	if not end_year:
+		end_year = start_year
+
+	base_url = "https://www-genesis.destatis.de/genesisWS"
+
+	# Ensure we have valid credentials
+	print("Validating credentials... ", end="")
+	res = requests.post(f"{base_url}/rest/2020/helloworld/logincheck",
+		headers={
+			"Content-Type": "application/x-www-form-urlencoded",
+			"username": token,
+			"password": password
+		},
+		json={"sprache": "en"}
+	)
+
+	d = res.json()
+	
+	if "Fehler" in d["Status"]:
+		raise ValueError(d["Status"])
+	
+	print("success")
+	
+	# Create job
+	print("Creating export job... ", end="")
+	job = None
+	params = {
+		"method": "TabellenExport",
+		"kennung": token,
+		"passwort": password,
+		"namen": ','.join(tables),
+		"bereich": "Alle",
+		"format": "datencsv",
+		"strukturinformationen": "false",
+		"komprimieren": "false",
+		"transponieren": "false",
+		"startjahr": start_year,
+		"endjahr": end_year,
+		"zeitscheiben": "",
+		"regionalmerkmal": "",
+		"regionalschluessel": "",
+		"stand": "",
+		"auftrag": "true",
+		"sprache": "de",
+	}
+
+	keys = list(attributes.keys())
+	for i in range(3):
+		key = keys[i] if i < len(keys) else ""
+		val = attributes[key] if key in keys else ""
+		params[f"sachmerkmal{i + 1 if i > 0 else ""}"] = key
+		params[f"sachschluessel{i + 1 if i > 0 else ""}"] = val
+	
+	url = f"{base_url}/web/ExportService_2010?{parse.urlencode(params)}"
+
+	res = requests.get(url)
+	d = xmltodict.parse(res.text)["soapenv:Envelope"]["soapenv:Body"]
+
+	# Throw on error response
+	if "soapenv:Fault" in d:
+		raise ValueError(d["soapenv:Fault"]["faultcode"], d["soapenv:Fault"]["faultstring"])
+
+	# Ensure tabellen.tabellen is a list
+	if isinstance(d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"], dict):
+		d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"] = [d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"]]
+	
+	# Sometimes this returns the result right away even though we
+	# asked for a job, so we need to detect that and return early.
+	if d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"][0]["returnInfo"]["code"] == "0":
+		print("got result, done\n")
+		return d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"][0]["tabellenDaten"]
+
+	if d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"][0]["returnInfo"]["code"] == "99":
+		job = re.search(f"{tables[0]}_.+$", d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"][0]["returnInfo"]["inhalt"]).group(0)
+		print(f"success (job: {job})")
+
+	if not job:
+		print("Could not find job ID")
+		print(d)
+		return
+		
+	# Poll to see if the job is done
+	backoff = 30
+	params = {
+		"method": "ErgebnisExport",
+		"kennung": token,
+		"passwort": password,
+		"name": job,
+		"bereich": "Meine",
+		"format": "datencsv",
+		"komprimieren": "false",
+		"sprache": "de",
+	}
+
+	url = f"{base_url}/web/ExportService_2010?{parse.urlencode(params)}"
+
+	while True:
+		time.sleep(backoff)
+		backoff *= 2
+
+		# The government's job list endpoint is broken so
+		# we just poll for the result directly
+		print("Polling for job results... ", end="")
+		res = requests.get(url)
+		d = xmltodict.parse(res.text)["soapenv:Envelope"]["soapenv:Body"]
+
+		if d["ErgebnisExportResponse"]["ErgebnisExportReturn"]["returnInfo"]["code"] != "0":
+			print(f"not done, retrying in {backoff}s")
+			continue
+
+		print("done")
+		return d["ErgebnisExportResponse"]["ErgebnisExportReturn"]["tabelle"]["tabellenDaten"]

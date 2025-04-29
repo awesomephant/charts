@@ -6,6 +6,7 @@ abolish-job-applications/
 __pycache__/
 .DS_Store
 *.ai
+.env 
 
 /tariffs/data/*
 /trucks/data/*
