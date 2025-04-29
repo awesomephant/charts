@@ -13,15 +13,11 @@ def get_destatis_table(token: str, password: str, tables: list[str], start_year:
 
 	# Ensure we have valid credentials
 	print("Validating credentials... ", end="")
+
 	res = requests.post(f"{base_url}/rest/2020/helloworld/logincheck",
-		headers={
-			"Content-Type": "application/x-www-form-urlencoded",
-			"username": token,
-			"password": password
-		},
+		headers={"Content-Type": "application/x-www-form-urlencoded", "username": token, "password": password},
 		json={"sprache": "en"}
 	)
-
 	d = res.json()
 	
 	if "Fehler" in d["Status"]:
@@ -83,8 +79,7 @@ def get_destatis_table(token: str, password: str, tables: list[str], start_year:
 		print(f"success (job: {job})")
 
 	if not job:
-		print("Could not find job ID")
-		print(d)
+		print(f"could not find job ID\n{d}")
 		return
 		
 	# Poll to see if the job is done
@@ -118,3 +113,17 @@ def get_destatis_table(token: str, password: str, tables: list[str], start_year:
 
 		print("done")
 		return d["ErgebnisExportResponse"]["ErgebnisExportReturn"]["tabelle"]["tabellenDaten"]
+	
+
+d = get_destatis_table(
+	token="43d8642e545a46658eb3ed4300aa5eed",
+	password="X5yH_Hvgwr9bopmXwYYX",
+	tables=["51000-0009"],
+	start_year=2024,
+	attributes={
+		"STLAH": "STLAH400", # destination country code
+		"WAM6": "WA010121,WA010129" # product code
+		}
+	)
+
+print(d)
