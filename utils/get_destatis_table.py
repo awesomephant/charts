@@ -4,7 +4,7 @@ import xmltodict
 import time
 import re
 
-def get_destatis_table(token: str, password: str, tables: list[str], start_year: int, attributes: dict, end_year: int = None) -> str:
+def get_destatis_table(token: str, password: str, tables: list[str], start_year: int, attributes: dict, end_year: int = None, silent: bool = False, skip_credential_validation: bool = False) -> str:
 
 	if not end_year:
 		end_year = start_year
@@ -12,21 +12,22 @@ def get_destatis_table(token: str, password: str, tables: list[str], start_year:
 	base_url = "https://www-genesis.destatis.de/genesisWS"
 
 	# Ensure we have valid credentials
-	print("Validating credentials... ", end="")
-
-	res = requests.post(f"{base_url}/rest/2020/helloworld/logincheck",
-		headers={"Content-Type": "application/x-www-form-urlencoded", "username": token, "password": password},
-		json={"sprache": "en"}
-	)
-	d = res.json()
-	
-	if "Fehler" in d["Status"]:
-		raise ValueError(d["Status"])
-	
-	print("success")
+	if not skip_credential_validation:
+		if not silent:
+			print("Validating credentials... ", end="")
+		res = requests.post(f"{base_url}/rest/2020/helloworld/logincheck",
+			headers={"Content-Type": "application/x-www-form-urlencoded", "username": token, "password": password},
+			json={"sprache": "en"}
+		)
+		d = res.json()
+		if "Fehler" in d["Status"]:
+			raise ValueError(d["Status"])
+		if not silent:
+			print("success")
 	
 	# Create job
-	print("Creating export job... ", end="")
+	if not silent:
+		print("Creating export job... ", end="")
 	job = None
 	params = {
 		"method": "TabellenExport",
@@ -115,15 +116,15 @@ def get_destatis_table(token: str, password: str, tables: list[str], start_year:
 		return d["ErgebnisExportResponse"]["ErgebnisExportReturn"]["tabelle"]["tabellenDaten"]
 	
 
-d = get_destatis_table(
-	token="43d8642e545a46658eb3ed4300aa5eed",
-	password="X5yH_Hvgwr9bopmXwYYX",
-	tables=["51000-0009"],
-	start_year=2024,
-	attributes={
-		"STLAH": "STLAH400", # destination country code
-		"WAM6": "WA010121,WA010129" # product code
-		}
-	)
+# d = get_destatis_table(
+# 	token="43d8642e545a46658eb3ed4300aa5eed",
+# 	password="X5yH_Hvgwr9bopmXwYYX",
+# 	tables=["51000-0009"],
+# 	start_year=2024,
+# 	attributes={
+# 		"STLAH": "STLAH400", # destination country code
+# 		"WAM6": "WA010121,WA010129" # product code
+# 		}
+# 	)
 
-print(d)
+# print(d)
