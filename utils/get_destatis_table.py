@@ -72,7 +72,8 @@ def get_destatis_table(token: str, password: str, tables: list[str], start_year:
 	# Sometimes this returns the result right away even though we
 	# asked for a job, so we need to detect that and return early.
 	if d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"][0]["returnInfo"]["code"] == "0":
-		print("got result, done\n")
+		if not silent:
+			print("got result, done\n")
 		return d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"][0]["tabellenDaten"]
 
 	if d["TabellenExportResponse"]["TabellenExportReturn"]["tabellen"]["tabellen"][0]["returnInfo"]["code"] == "99":
@@ -109,22 +110,10 @@ def get_destatis_table(token: str, password: str, tables: list[str], start_year:
 		d = xmltodict.parse(res.text)["soapenv:Envelope"]["soapenv:Body"]
 
 		if d["ErgebnisExportResponse"]["ErgebnisExportReturn"]["returnInfo"]["code"] != "0":
-			print(f"not done, retrying in {backoff}s")
+			if not silent:
+				print(f"not done, retrying in {backoff}s")
 			continue
 
-		print("done")
+		if not silent:
+			print("done")
 		return d["ErgebnisExportResponse"]["ErgebnisExportReturn"]["tabelle"]["tabellenDaten"]
-	
-
-# d = get_destatis_table(
-# 	token="43d8642e545a46658eb3ed4300aa5eed",
-# 	password="X5yH_Hvgwr9bopmXwYYX",
-# 	tables=["51000-0009"],
-# 	start_year=2024,
-# 	attributes={
-# 		"STLAH": "STLAH400", # destination country code
-# 		"WAM6": "WA010121,WA010129" # product code
-# 		}
-# 	)
-
-# print(d)
