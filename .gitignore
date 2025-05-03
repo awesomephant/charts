@@ -9,5 +9,6 @@ __pycache__/
 .env 
 
 /tariffs/data/*
+/tariffs/tariffs.html
 /trucks/data/*
 !/trucks/data/.gitkeep

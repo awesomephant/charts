@@ -1,6 +1,5 @@
 import textwrap
 import squarify
-from matplotlib import pyplot as plt
 from matplotlib import colormaps
 
 def sum_tree(tree, key=None):
@@ -13,10 +12,10 @@ def sort_tree(tree, key=None):
 		sort_tree(tree[i], key)
 	return tree[0]
 
-def plot_nested_treemap(tree, fig, ax: plt.Axes, key=None, label=None):
-	cmap = colormaps.get_cmap('tab20c')
+def plot_nested_treemap(tree, fig, ax, key=None, label=None, cmap="tab20c"):
+	cmap = colormaps.get_cmap(cmap)
 	bbox = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
-	def plot_treemap(tree, ax: plt.Axes, x = 0, y = 0, w = 100, h = 100, color=None, edgecolor="white", level=0):
+	def plot_treemap(tree, ax, x = 0, y = 0, w = 100, h = 100, color=None, edgecolor="white", level=0):
 		flat = squarify.normalize_sizes([sum_tree(x, key) if isinstance(x, list) else x[key] if key else x for x in tree], w, h)
 		sq = squarify.squarify(flat, x, y, w, h)
 		p = .5
